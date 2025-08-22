@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if event_list %}
+    {% for event in event_list %}
+    	{{ event.name }}
+    {% endfor %}
+  {% else %}
+    <p>No events...</p>
+  {% endif %}
+{% endblock %}
