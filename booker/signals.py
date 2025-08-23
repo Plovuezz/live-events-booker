@@ -7,3 +7,5 @@ from booker.models import User, Band, BandInfo
 def create_band_info(sender, instance, created, **kwargs):
     if created:
         BandInfo.objects.create(band=instance)
+
+
