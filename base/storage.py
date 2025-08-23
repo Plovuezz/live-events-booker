@@ -30,14 +30,14 @@ class WindowsCompatibleDropboxStorage(DropboxStorage):
     #     cache.set(cache_key, link, self.CACHE_TTL)
     #
     #     return link
-
-    def _save(self, name, content):
-        name = super()._save(name, content)
-
-        link = self.client.sharing_create_shared_link(self._full_path(name))
-        url = link.url.replace("dl=0", "dl=1")
-
-        return url
-
-    def url(self, name):
-        return name
+    #
+    # def _save(self, name, content):
+    #     name = super()._save(name, content)
+    #
+    #     link = self.client.sharing_create_shared_link(self._full_path(name))
+    #     url = link.url.replace("dl=0", "dl=1")
+    #
+    #     return url
+    #
+    # def url(self, name):
+    #     return name

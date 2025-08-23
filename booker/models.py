@@ -3,14 +3,21 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import CASCADE, SET_NULL, Q
 
 
+class Genre(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Band(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField(null=True, blank=True)
-    genre = models.CharField(max_length=255, null=True, blank=True)
+    genres = models.ManyToManyField(Genre, related_name="bands")
     avatar = models.ImageField(upload_to="bands/", null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name} - {self.genre}"
+        return self.name
 
 
 class BandInfo(models.Model):
@@ -35,8 +42,20 @@ class Location(models.Model):
         return f"{self.name}, {self.city}"
 
 
+class Tour(models.Model):
+    description = models.TextField(null=True, blank=True)
+    avatar = models.ImageField(upload_to="tours/", null=True, blank=True)
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+
+
 class Event(models.Model):
     band = models.ForeignKey(Band, on_delete=CASCADE, related_name="events")
+    tour = models.ForeignKey(
+        Tour, on_delete=CASCADE, related_name="events", null=True, blank=True
+    )
     location = models.ForeignKey(
         Location, on_delete=CASCADE, related_name="events"
     )
@@ -46,7 +65,7 @@ class Event(models.Model):
     date = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.band.name}, {self.location}, {self.date.strftime('%A %-d, %Y')}"
+        return f"{self.band.name}, {self.location}, {self.date.strftime('%Y-%m-%d %H:%M')}"
 
 
 class Zone(models.Model):
@@ -61,17 +80,7 @@ class Zone(models.Model):
     seats = models.PositiveIntegerField(null=True, default=None)
 
     def __str__(self):
-        return f"{self.location.name}`s {self.name}"
-
-
-class Tour(models.Model):
-    events = models.ManyToManyField(Event, related_name="tours")
-    description = models.TextField(null=True, blank=True)
-    avatar = models.ImageField(upload_to="tours/", null=True, blank=True)
-    title = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.title
+        return f"{self.location.name}'s {self.name}"
 
 
 class User(AbstractUser):
@@ -100,8 +109,8 @@ class Ticket(models.Model):
         Zone, related_name="tickets", on_delete=CASCADE
     )
     added_at = models.DateTimeField(auto_now_add=True)
-    row = models.PositiveIntegerField(null=True, default=None)
-    seat = models.PositiveIntegerField(null=True, default=None)
+    row = models.PositiveIntegerField(null=True, blank=True)
+    seat = models.PositiveIntegerField(null=True, blank=True)
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
