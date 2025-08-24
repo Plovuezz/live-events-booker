@@ -1,0 +1,9 @@
+.navbar-large {
+  padding: 1.5rem 1rem;
+  transition: padding 0.3s;
+}
+
+.navbar-small {
+  padding: 0.5rem 1rem;
+  transition: padding 0.3s;
+}
