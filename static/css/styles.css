@@ -1,9 +1,217 @@
-.navbar-large {
-  padding: 1.5rem 1rem;
-  transition: padding 0.3s;
+html {
+  scroll-behavior: smooth;
 }
 
-.navbar-small {
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1030;
   padding: 0.5rem 1rem;
-  transition: padding 0.3s;
+  transition: all 0.3s ease;
+  background-color: #1a1a1a;
 }
+
+.navbar-brand img {
+  height: 90px;
+  transition: height 0.3s ease;
+}
+
+
+.navbar.scrolled {
+  padding: 0.3rem 1rem;
+}
+
+.navbar.scrolled .navbar-brand img {
+  height: 60px;
+}
+
+.nav-text {
+  font-weight: 700;
+  font-family: 'Arial', sans-serif;
+  color: white !important;
+  text-transform: uppercase;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.nav-text:hover {
+  color: darkgray !important;
+  transform: scale(1.05);
+}
+
+.nav-text-black {
+  font-weight: 700;
+  font-family: 'Arial', sans-serif;
+  color: black !important;
+  text-transform: uppercase;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.nav-text-black:hover {
+  color: #222222 !important;
+  transform: scale(1.05);
+}
+
+body {
+  margin-top: 150px !important;
+}
+
+
+
+
+
+.events-container {
+  padding: 25px;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-content: center;
+}
+
+.event-card {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.event-info {
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
+
+
+
+.btn-details,
+.btn-ticket {
+  display: inline-block;
+  padding: 5px 10px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+
+.btn-details {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.btn-details:hover {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+
+.btn-ticket {
+  background-color: #f03c24;
+  color: #fff;
+}
+
+.btn-ticket:hover {
+  background-color: #c5301b;
+  color: #fff;
+  text-decoration: none;
+}
+
+
+.btn-index,
+.btn-index2 {
+  display: inline-block;
+  padding: 5px 20px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+
+.btn-index {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+
+.btn-index:hover {
+  background-color: #5a5a5a;
+  color: #fff;
+  text-decoration: none;
+}
+
+
+.btn-index2 {
+  background-color: #ffffff;
+  color: #5a5a5a;
+}
+
+.btn-index2:hover {
+  background-color: #aaaaaa;
+  color: #fff;
+  text-decoration: none;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.bg-white {
+  background: linear-gradient(135deg, #ffffff, #f1f3f5);
+}
+
+.band-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* збільшили мінімальну ширину */
+  gap: 2.5rem; /* трохи більше відстані між картками */
+  justify-items: center;
+  padding: 40px;
+}
+
+.band-card {
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.band-card:hover {
+  transform: translateY(-5px); /* легкий підйом при наведенні */
+}
+
+.band-avatar {
+  width: 200px; /* більше фото */
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.band-avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+.band-name {
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 16px; /* трохи більший шрифт */
+  text-transform: uppercase;
+  color: #333; /* темніший текст для кращого контрасту */
+}
+
+
+
+
+

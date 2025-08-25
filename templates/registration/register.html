@@ -11,14 +11,16 @@
   </style>
   <div class="min-vh-100 d-flex align-items-center justify-content-center" style="background-color:#1a1a1a;">
     <div class="card shadow-lg p-4" style="min-width:380px; border-radius:16px; background:#111; color:#eee;">
-      <h2 class="text-center mb-3" style="color:#f03c24;">Login</h2>
+      <h2 class="text-center mb-3" style="color:#f03c24;">Registration</h2>
 
       {# Messages #}
       {% if messages %}
         <div class="mb-3">
           {% for message in messages %}
-            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+            <div class="alert alert-dismissible fade show" role="alert"
+                 style="background: rgba(240,60,36,.15); border:1px solid #f03c24; color:#fff;">
               {{ message|safe }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           {% endfor %}
         </div>

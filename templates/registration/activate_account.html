@@ -1,0 +1,58 @@
+{% autoescape off %}
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <style>
+        .button {
+            background-color: #f03c24;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .container {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <h2>Hi {{ user.username }},</h2>
+
+    <p>Thank you for registering! Please confirm your email address to complete your registration.</p>
+
+    <div style="text-align: center; margin: 30px 0; background-color: #1a1a1a">
+      <a href="{{ url }}" class="button">
+        Confirm Email Address
+      </a>
+    </div>
+
+    <p>If the button above doesn't work, please copy and paste the following link into your browser:</p>
+    <p style="word-break: break-all;">
+      {{ url }}
+    </p>
+
+    <div class="footer">
+      <p>If you didn't register on our site, please ignore this email.</p>
+      <p>This is an automated message, please do not reply to this email.</p>
+    </div>
+  </div>
+  </body>
+  </html>
+{% endautoescape %}

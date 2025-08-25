@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load static %}
+  <div class="d-flex" style="min-height:100vh; background-color:#f8f9fa;">
+
+    {% include "includes/profile_sidebar.html" %}
+
+    <div class="flex-grow-1 p-4" style="margin-right: 100px">
+
+      <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+          <a class="nav-link nav-text-black active" href="#">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-text-black" href="{% url 'booker:profile-tickets' %}">Tickets</a>
+        </li>
+        {% if user.band %}
+          <li class="nav-item">
+          <a class="nav-link nav-text-black" href="#">Band</a>
+          </li>
+        {% endif %}
+      </ul>
+
+      <div class="bg-white p-4 rounded shadow-sm">
+        <h5 class="text-center mb-4">Account settings</h5>
+        <br>
+        <br>
+
+        <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm hover-shadow">
+          <span><i class="bi bi-pencil-fill"></i>  Edit your profile info</span>
+          <a href="{% url 'booker:profile-user-update' %}" class="btn btn-ticket">Edit</a>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm hover-shadow">
+          <span><i class="bi bi-pencil-fill"></i>  Change password</span>
+          <a href="{% url 'booker:profile-password-update' %}" class="btn btn-ticket">Change</a>
+        </div>
+
+        {% if not user.band %}
+          <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm hover-shadow">
+            <span><i class="bi bi-people-fill"></i>  Set a band</span>
+            <a href="#" class="btn btn-ticket">Set</a>
+          </div>
+        {% endif %}
+
+        <div class="mt-4 text-center">
+          <img src="{% static 'tickets.png' %}" alt="Tickets" style="max-width:200px;">
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

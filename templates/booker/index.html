@@ -1,11 +1,87 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if event_list %}
-    {% for event in event_list %}
-    	{{ event.name }}
-    {% endfor %}
-  {% else %}
-    <p>No events...</p>
-  {% endif %}
+
+    <div class="text-center my-4">
+      <h2 class="h2 fw-bold">Events</h2>
+      <hr class="mx-auto" style="width: 80px; border-top: 3px solid">
+    </div>
+    <div class="events-container">
+      {% if event_list %}
+        {% for event in event_list %}
+          <div class="event-card"
+               style="background-image: url('{% if event.tour %}{{ event.tour.avatar.url }}{% elif event.photo %}{{ event.photo.url }}{% elif event.band.avatar %}{{ event.band.avatar.url }}{% endif %}');">
+            <div class="event-info">
+              <h3 style="font-weight: bold">{{ event.band.name }}</h3>
+              <p>{{ event.location.name }}, {{ event.location.city }}</p>
+              <p><span style="font-size: larger; font-weight: bold">{{ event.date|date:"d.m" }}</span> {{ event.date|date:"G:i" }}</p>
+              <a href="{% url 'booker:event-detail' event.pk %}" class="btn-details">More details</a>
+              <a href="#" class="btn-ticket">Get a Ticket</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No events for now...</p>
+      {% endif %}
+    </div>
+    <div style="display: flex; justify-content: center">
+      <a href="{% url 'booker:tour-list' %}" class="btn-index">All Events</a>
+    </div>
+
+  <br>
+  <br>
+
+  <div style="background-color: #1a1a1a; padding-top: 40px; padding-bottom: 20px">
+    <div class="text-center my-4">
+      <h2 class="h2 fw-bold text-white">Tours</h2>
+      <div class="mx-auto bg-white" style="height: 3px; width: 50px;"></div>
+    </div>
+    <div class="events-container">
+      {% if tour_list %}
+        {% for tour in tour_list %}
+          <div class="event-card"
+               style="background-image: url('{% if tour.avatar %}{{ tour.avatar.url }}{% else %}{{ tour.initiator.avatar.url }}{% endif %}');">
+            <div class="event-info">
+              <h3>{{ tour.title }}</h3>
+              <p style="font-weight: bold">{{ tour.initiator }}</p>
+              <p><span style="font-size: larger; font-weight: bold">{{ tour.start_time|date:"d.m" }}</span> {{ tour.start_time|date:"G:i" }}</p>
+              <a href="{% url 'booker:tour-detail' tour.id %}" class="btn-details">More details</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No tours for now...</p>
+      {% endif %}
+    </div>
+
+    <br>
+    <div style="display: flex; justify-content: center">
+      <a href="{% url 'booker:tour-list' %}" class="btn-index2">All Tours</a>
+    </div>
+    <br>
+  </div>
+
+
+  <div class="text-center my-4">
+    <h2 class="h2 fw-bold"> All Artists</h2>
+    <hr class="mx-auto" style="width: 110px; border-top: 3px solid">
+  </div>
+
+  <div class="band-container">
+    {% if band_list %}
+      {% for band in band_list %}
+        <div class="band-card">
+          {% if band.avatar %}
+            <img src="{{ band.avatar.url }}" alt="{{ band.name }}" class="band-avatar">
+{#          {% else %}#}
+{#            <img src="{% static 'img/default-band.png' %}" alt="No avatar" class="band-avatar">#}
+          {% endif %}
+          <div class="band-name">{{ band.name }}</div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No bands for now...</p>
+    {% endif %}
+  </div>
+
 {% endblock %}

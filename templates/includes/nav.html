@@ -1,0 +1,28 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'booker:index' %}">
+      <img src="{% static 'logoo.png' %}" alt="Logo">
+    </a>
+    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+      <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:event-list' %}">Events</a></li>
+      <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:tour-list' %}">Tours</a></li>
+      <li class="nav-item"><a class="nav-link nav-text" href="#">Locations</a></li>
+      <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:band-list' %}">Artists</a></li>
+    </ul>
+    {% if user.is_authenticated %}
+      <a class="nav-link nav-text" href="{% url 'booker:profile' %}">
+        <span style="font-size: larger"><i class="bi bi-person-circle"></i></span>
+        {{ user.username }}
+      </a>
+      <a class="nav-link nav-text" href="{% url 'booker:logout' %}">Logout</a>
+    {% else %}
+      <a class="nav-link nav-text" href="{% url 'login' %}">Login</a>
+      <a class="nav-link nav-text" href="{% url 'booker:register' %}">Sign up</a>
+    {% endif %}
+{#    <form class="d-flex">#}
+{#      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
+{#      <button class="btn btn-outline-success" type="submit">Search</button>#}
+{#    </form>#}
+  </div>
+</nav>

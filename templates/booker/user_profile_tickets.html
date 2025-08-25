@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load static %}
+<div class="d-flex" style="min-height:100vh; background-color:#f8f9fa;">
+
+  {% include "includes/profile_sidebar.html" %}
+
+  <div class="flex-grow-1 p-4" style="margin-right: 100px">
+
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a class="nav-link nav-text-black" href="{% url 'booker:profile' %}">Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-text-black active" href="#">Tickets</a>
+      </li>
+
+    </ul>
+
+    <!-- Контент -->
+    <div class="bg-white p-4 rounded shadow-sm text-center">
+      <h5>There are no tickets on your list yet.</h5>
+      <br>
+      <br>
+
+      <a href="#" class="btn btn-ticket">To the poster</a>
+      <div class="mt-4">
+        <img src="{% static 'tickets.png' %}" alt="Tickets" style="max-width:200px;">
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

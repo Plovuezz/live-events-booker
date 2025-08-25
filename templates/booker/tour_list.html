@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="text-center my-4">
+    <h2 class="h2 fw-bold">All Upcoming Tours</h2>
+    <hr class="mx-auto" style="width: 90px; border-top: 3px solid">
+  </div>
+  <div class="events-container">
+    {% if tour_list %}
+      {% for tour in tour_list %}
+        <div class="event-card"
+             style="background-image: url('{% if tour.avatar %}{{ tour.avatar.url }}{% else %}{{ tour.initiator.avatar.url }}{% endif %}');">
+          <div class="event-info">
+            <h3>{{ tour.title }}</h3>
+            <p style="font-weight: bold">{{ tour.initiator }}</p>
+            <p><span style="font-size: larger; font-weight: bold">{{ tour.start_time|date:"d.m" }}</span> {{ tour.start_time|date:"G:i" }}</p>
+            <a href="{% url 'booker:tour-detail' tour.id %}" class="btn-details">More details</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No tours for now...</p>
+    {% endif %}
+  </div>
+  <br>
+
+{% endblock %}

@@ -1,6 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CASCADE, SET_NULL, Q
+from django.utils import timezone
 
 
 class Genre(models.Model):
@@ -14,7 +16,7 @@ class Band(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField(null=True, blank=True)
     genres = models.ManyToManyField(Genre, related_name="bands")
-    avatar = models.ImageField(upload_to="bands/", null=True, blank=True)
+    avatar = models.ImageField(upload_to="bands/")
 
     def __str__(self):
         return self.name
@@ -46,26 +48,12 @@ class Tour(models.Model):
     description = models.TextField(null=True, blank=True)
     avatar = models.ImageField(upload_to="tours/", null=True, blank=True)
     title = models.CharField(max_length=255)
+    start_time = models.DateTimeField()
+    initiator = models.ForeignKey(Band, related_name="tours", on_delete=CASCADE)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
-
-
-class Event(models.Model):
-    band = models.ForeignKey(Band, on_delete=CASCADE, related_name="events")
-    tour = models.ForeignKey(
-        Tour, on_delete=CASCADE, related_name="events", null=True, blank=True
-    )
-    location = models.ForeignKey(
-        Location, on_delete=CASCADE, related_name="events"
-    )
-    photo = models.ImageField(upload_to="events/", null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    is_active = models.BooleanField(default=False)
-    date = models.DateTimeField()
-
-    def __str__(self):
-        return f"{self.band.name}, {self.location}, {self.date.strftime('%Y-%m-%d %H:%M')}"
 
 
 class Zone(models.Model):
@@ -76,11 +64,44 @@ class Zone(models.Model):
         Location, on_delete=CASCADE, related_name="zones"
     )
     has_seats = models.BooleanField(default=False)
-    rows = models.PositiveIntegerField(null=True, default=None)
-    seats = models.PositiveIntegerField(null=True, default=None)
+    rows = models.PositiveIntegerField(blank=True, null=True)
+    seats = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.location.name}'s {self.name}"
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    band = models.ForeignKey(Band, on_delete=CASCADE, related_name="events")
+    tour = models.ForeignKey(
+        Tour, on_delete=CASCADE, related_name="events", null=True, blank=True
+    )
+    location = models.ForeignKey(
+        Location, on_delete=CASCADE, related_name="events"
+    )
+    zones = models.ManyToManyField(Zone, related_name="events")
+    photo = models.ImageField(upload_to="events/", null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    date = models.DateTimeField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["location", "date"],
+                name="unique_date_and_location"
+            )
+        ]
+        ordering = ["date"]
+
+    def clean(self):
+        super().clean()
+        if self.date < timezone.now():
+            raise ValidationError({"date": "Date cant be in the past!"})
+
+    def __str__(self):
+        return f"{self.band.name}, {self.location}, {self.date.strftime('%Y-%m-%d %H:%M')}"
 
 
 class User(AbstractUser):
@@ -127,4 +148,4 @@ class Ticket(models.Model):
         ]
 
     def __str__(self):
-        return f"Ticket for {self.event} in {self.zone} {self.added_at.strftime('%A %-d, %Y (%H:%M)')} ({self.status})"
+        return f"{self.zone} on {self.event} {self.added_at.strftime('%A %d, %Y (%H:%M)')} ({self.status})"
