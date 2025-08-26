@@ -63,9 +63,9 @@ class Zone(models.Model):
     location = models.ForeignKey(
         Location, on_delete=CASCADE, related_name="zones"
     )
-    has_seats = models.BooleanField(default=False)
-    rows = models.PositiveIntegerField(blank=True, null=True)
-    seats = models.PositiveIntegerField(blank=True, null=True)
+    # has_seats = models.BooleanField(default=False)
+    # rows = models.PositiveIntegerField(blank=True, null=True)
+    # seats = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.location.name}'s {self.name}"
@@ -130,22 +130,22 @@ class Ticket(models.Model):
         Zone, related_name="tickets", on_delete=CASCADE
     )
     added_at = models.DateTimeField(auto_now_add=True)
-    row = models.PositiveIntegerField(null=True, blank=True)
-    seat = models.PositiveIntegerField(null=True, blank=True)
+    # row = models.PositiveIntegerField(null=True, blank=True)
+    # seat = models.PositiveIntegerField(null=True, blank=True)
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
         default=Status.RESERVED,
     )
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields= ["event", "zone", "row", "seat"],
-                name="unique_ticket_per_event",
-                condition=Q(row__isnull=False, seat__isnull=False)
-            )
-        ]
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(
+    #             fields= ["event", "zone", "row", "seat"],
+    #             name="unique_ticket_per_event",
+    #             condition=Q(row__isnull=False, seat__isnull=False)
+    #         )
+    #     ]
 
     def __str__(self):
         return f"{self.zone} on {self.event} {self.added_at.strftime('%A %d, %Y (%H:%M)')} ({self.status})"

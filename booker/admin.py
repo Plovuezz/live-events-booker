@@ -94,7 +94,7 @@ class AdminZone(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class AdminTicket(admin.ModelAdmin):
-    list_display = ("user", "event", "zone", "added_at", "row", "seat")
+    list_display = ("user", "event", "zone", "added_at")
     search_fields = ["user__username", "event__name"]
     list_filter = ("user__username", "event__name", "status")
 
