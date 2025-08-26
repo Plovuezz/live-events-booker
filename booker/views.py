@@ -2,11 +2,16 @@ from base64 import urlsafe_b64encode
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
+from django.db import transaction
+from django.db.models import Count, Q
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
@@ -15,7 +20,7 @@ from django.views import generic
 from stone.backends.python_rsrc.stone_validators import ValidationError
 
 from booker.forms import UserRegistrationForm, UserUpdateForm
-from booker.models import Event, Tour, Ticket, User, Band
+from booker.models import Event, Tour, Ticket, User, Band, Zone
 from booker.services.token_service import account_activation_token
 
 
@@ -155,3 +160,87 @@ class CustomPasswordChangeView(PasswordChangeView):
 class TicketListView(generic.ListView):
     model = Ticket
     template_name = "booker/user_profile_tickets.html"
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(
+            status__in=[Ticket.Status.PURCHASED, Ticket.Status.CANCELLED]
+        ).select_related(
+            "zone", "event", "zone__location", "event__band"
+        ).order_by("-added_at")
+
+
+class BookTicketView(LoginRequiredMixin, generic.ListView):
+    model = Ticket
+    template_name = "booker/book_ticket.html"
+
+    def get_queryset(self):
+        return Ticket.objects.filter(
+            user=self.request.user,
+            event=self.kwargs["pk"],
+            status=Ticket.Status.RESERVED
+        )
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        event = get_object_or_404(Event, id=self.kwargs["pk"])
+        context["event"] = event
+
+        zones = event.zones.annotate(
+            sold=Count(
+                "tickets",
+                filter=Q(
+                    tickets__event=event,
+                    tickets__status__in=[
+                        Ticket.Status.RESERVED, Ticket.Status.PURCHASED
+                    ]
+                )
+            )
+        )
+
+        context["zones"] = [(zone, zone.capacity - zone.sold) for zone in zones]
+
+        return context
+
+
+@login_required
+def create_ticket(request, zone_id, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    zone = get_object_or_404(Zone, id=zone_id)
+
+    if zone.tickets.filter(
+        status__in=[Ticket.Status.RESERVED, Ticket.Status.PURCHASED]
+    ).count() >= zone.capacity:
+        messages.error(request, "No tickets left")
+        return redirect("booker:book-ticket")
+
+    Ticket.objects.create(
+        user=request.user,
+        event=event,
+        zone=zone,
+        status=Ticket.Status.RESERVED
+    )
+    return redirect("booker:book-ticket", pk=event.id)
+
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    event = ticket.event
+    if ticket.user == request.user:
+        ticket.delete()
+        return redirect("booker:book-ticket", pk=event.pk)
+    raise Http404()
+
+
+@login_required
+@transaction.atomic
+def buy_ticket(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+
+    Ticket.objects.filter(
+        user=request.user,
+        event=event
+    ).update(status=Ticket.Status.PURCHASED)
+
+    return render(request, "booker/purchase_success.html")

@@ -105,6 +105,7 @@ body {
 
 .btn-details {
   background-color: transparent;
+  padding: 3px 10px;
   color: #fff;
   border: 2px solid #fff;
 }
@@ -210,7 +211,6 @@ body {
   text-transform: uppercase;
   color: #333; /* темніший текст для кращого контрасту */
 }
-
 
 
 

@@ -52,8 +52,9 @@
               </div>
 
               <!-- Button -->
-              <div>
-                <a href="#" class="btn-ticket">Get a Ticket</a>
+              <div style="gap: 20px">
+                <a href="{% url 'booker:event-detail' event.id %}" class="btn-index">More</a>
+                <a href="{% url 'booker:book-ticket' event.id %}" class="btn-ticket">Get a Ticket</a>
               </div>
 
             </div>

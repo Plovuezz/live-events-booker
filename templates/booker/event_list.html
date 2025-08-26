@@ -12,11 +12,11 @@
         <div class="event-card"
              style="background-image: url('{% if event.tour %}{{ event.tour.avatar.url }}{% elif event.photo %}{{ event.photo.url }}{% elif event.band.avatar %}{{ event.band.avatar.url }}{% endif %}');">
           <div class="event-info">
-            <h3>{{ event.band.name }}</h3>
-            <p style="font-weight: bold">{{ event.location.name }}, {{ event.location.city }}</p>
+            <h3 style="font-weight: bold">{{ event.band.name }}</h3>
+            <p>{{ event.location.name }}, {{ event.location.city }}</p>
             <p><span style="font-size: larger; font-weight: bold">{{ event.date|date:"d.m" }}</span> {{ event.date|date:"G:i" }}</p>
             <a href="{% url 'booker:event-detail' event.pk %}" class="btn-details">More details</a>
-            <a href="#" class="btn-ticket">Get a Ticket</a>
+            <a href="{% url 'booker:book-ticket' event.id %}" class="btn-ticket">Get a Ticket</a>
           </div>
         </div>
       {% endfor %}

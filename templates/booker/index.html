@@ -16,7 +16,7 @@
               <p>{{ event.location.name }}, {{ event.location.city }}</p>
               <p><span style="font-size: larger; font-weight: bold">{{ event.date|date:"d.m" }}</span> {{ event.date|date:"G:i" }}</p>
               <a href="{% url 'booker:event-detail' event.pk %}" class="btn-details">More details</a>
-              <a href="#" class="btn-ticket">Get a Ticket</a>
+              <a href="{% url 'booker:book-ticket' event.id %}" class="btn-ticket">Get a Ticket</a>
             </div>
           </div>
         {% endfor %}
