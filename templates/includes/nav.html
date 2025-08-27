@@ -7,7 +7,7 @@
     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
       <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:event-list' %}">Events</a></li>
       <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:tour-list' %}">Tours</a></li>
-      <li class="nav-item"><a class="nav-link nav-text" href="#">Locations</a></li>
+{#      <li class="nav-item"><a class="nav-link nav-text" href="#">Locations</a></li>#}
       <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:band-list' %}">Artists</a></li>
     </ul>
     {% if user.is_authenticated %}

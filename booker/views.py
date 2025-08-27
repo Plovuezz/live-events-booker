@@ -46,7 +46,6 @@ class IndexListView(generic.ListView):
 
 class EventListView(generic.ListView):
     model = Event
-    paginate_by = 20
 
 
 class EventDetailView(generic.DetailView):
@@ -55,7 +54,6 @@ class EventDetailView(generic.DetailView):
 
 class TourListView(generic.ListView):
     model = Tour
-    paginate_by = 20
 
 
 class TourDetailView(generic.DetailView):
@@ -64,7 +62,7 @@ class TourDetailView(generic.DetailView):
 
 class BandListView(generic.ListView):
     model = Band
-    paginate_by = 20
+    ordering = ["name"]
 
 
 def logout_view(request):
@@ -182,6 +180,7 @@ class TicketListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(
+            user=self.request.user,
             status__in=[Ticket.Status.PURCHASED, Ticket.Status.CANCELLED]
         ).select_related(
             "zone", "event", "zone__location", "event__band"
@@ -200,6 +199,45 @@ class UserBandDetail(LoginRequiredMixin, generic.DetailView):
         context["event_list"] = self.object.events.select_related("location", "tour").all().order_by("-date")
         context["tour_list"] = self.object.tours.select_related("initiator").all().order_by("-start_time")
         return context
+
+
+class BandUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Band
+    fields = [
+        "name", "bio", "genres", "avatar",
+    ]
+    template_name = "booker/band_form_update.html"
+    success_url = reverse_lazy("booker:profile-band")
+
+
+class TourUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Tour
+    fields = [
+        "description", "avatar", "title",
+        "start_time", "is_active"
+    ]
+    template_name = "booker/band_form_update.html"
+    success_url = reverse_lazy("booker:profile-band")
+
+
+class TourDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Tour
+    success_url = reverse_lazy("booker:profile-band")
+
+
+class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Event
+    fields = [
+        "name", "tour", "location", "zones",
+        "photo", "description", "is_active", "date"
+    ]
+    template_name = "booker/band_form_update.html"
+    success_url = reverse_lazy("booker:profile-band")
+
+
+class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Event
+    success_url = reverse_lazy("booker:profile-band")
 
 
 class BookTicketView(LoginRequiredMixin, generic.ListView):

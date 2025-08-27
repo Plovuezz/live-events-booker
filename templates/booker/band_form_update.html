@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  {% load static %}
+  <div class="d-flex" style="min-height:100vh; background-color:#f8f9fa;">
+
+    {% include "includes/profile_sidebar.html" %}
+
+    <div class="flex-grow-1 p-4" style="margin-right: 100px">
+
+      <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+          <a class="nav-link nav-text-black" href="{% url 'booker:profile' %}">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-text-black" href="{% url 'booker:profile-tickets' %}">Tickets</a>
+        </li>
+        {% if user.band %}
+          <li class="nav-item">
+          <a class="nav-link nav-text-black active" href="{% url 'booker:profile-band' %}">Band</a>
+          </li>
+        {% endif %}
+      </ul>
+
+      <div class="bg-white p-4 rounded shadow-sm">
+        <form action="" method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input class="btn btn-ticket" type="submit" value="Ok">
+        </form>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

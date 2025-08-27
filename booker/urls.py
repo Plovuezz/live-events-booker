@@ -3,8 +3,10 @@ from django.urls import path
 from booker.views import (
     IndexListView, EventListView, EventDetailView,
     TourDetailView, TourListView, activate,
-    register_view, logout_view, to_profile, TicketListView, UserUpdateView, CustomPasswordChangeView, BandListView,
-    BookTicketView, buy_ticket, delete_ticket, create_ticket, UserAddBandView, UserBandDetail
+    register_view, logout_view, to_profile, TicketListView,
+    UserUpdateView, CustomPasswordChangeView, BandListView,
+    BookTicketView, buy_ticket, delete_ticket, create_ticket,
+    UserAddBandView, UserBandDetail, EventUpdateView, TourUpdateView, BandUpdateView, EventDeleteView, TourDeleteView,
 )
 
 app_name = "booker"
@@ -19,6 +21,11 @@ urlpatterns = [
     path("profile/update/", UserUpdateView.as_view(), name="profile-user-update"),
     path("profile/band/add/", UserAddBandView.as_view(), name="profile-band-add"),
     path("profile/band/", UserBandDetail.as_view(), name="profile-band"),
+    path("profile/event/<int:pk>/update/", EventUpdateView.as_view(), name="band-event-update"),
+    path("profile/event/<int:pk>/delete/", EventDeleteView.as_view(), name="band-event-delete"),
+    path("profile/tour/<int:pk>/update/", TourUpdateView.as_view(), name="band-tour-update"),
+    path("profile/tour/<int:pk>/delete/", TourDeleteView.as_view(), name="band-tour-delete"),
+    path("profile/band/<int:pk>/update/", BandUpdateView.as_view(), name="profile-band-update"),
     path("profile/password/update/", CustomPasswordChangeView.as_view(), name="profile-password-update"),
     path("tickets/<int:pk>/", BookTicketView.as_view(), name="book-ticket"),
     path("tickets/<int:event_id>/buy/", buy_ticket, name="buy-ticket"),

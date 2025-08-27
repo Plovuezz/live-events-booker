@@ -55,7 +55,7 @@
         <div class="card shadow-sm border-0">
           <div class="card-body d-flex justify-content-between align-items-center">
             <span class="fw-bold">Edit band info</span>
-            <a class="btn btn-index" href="#">Edit</a>
+            <a class="btn btn-index" href="{% url 'booker:profile-band-update' band.pk %}">Edit</a>
           </div>
         </div>
       </div>
@@ -82,8 +82,31 @@
                 </div>
 
                 <div class="col-md-3 text-end">
-                  <a class="btn btn-index" href="#">Edit</a>
-                  <a class="btn btn-ticket" href="#">Delete</a>
+                  <a class="btn btn-index" href="{% url 'booker:band-tour-update' tour.pk %}">Edit</a>
+                  <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ tour.id }}">
+                  Delete
+                </button>
+
+                <div class="modal fade" id="deleteModal{{ tour.id }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Confirm delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+                        <form method="post" action="{% url 'booker:band-tour-delete' tour.pk %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger">Yes, delete</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
 
               </div>
@@ -118,8 +141,33 @@
                 </div>
 
                 <div class="col-md-3 text-end">
-                  <a class="btn btn-index" href="#">Edit</a>
-                  <a class="btn btn-ticket" href="#">Delete</a>
+                  <a class="btn btn-index" href="{% url 'booker:band-event-update' event.pk %}">Edit</a>
+
+
+                <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ event.id }}">
+                  Delete
+                </button>
+
+                <div class="modal fade" id="deleteModal{{ event.id }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Confirm delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+                        <form method="post" action="{% url 'booker:band-event-delete' event.pk %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger">Yes, delete</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
 
               </div>

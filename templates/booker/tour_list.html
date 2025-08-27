@@ -14,7 +14,7 @@
             <div class="event-info">
               <h3>{{ tour.title }}</h3>
               <p style="font-weight: bold">{{ tour.initiator }}</p>
-              <p><span style="font-size: larger; font-weight: bold">{{ tour.start_time|date:"d.m" }}</span> {{ tour.start_time|date:"G:i" }}</p>
+              <p><span style="font-size: larger; font-weight: bold">{{ tour.start_time|date:"d.m" }}</span></p>
               <a href="{% url 'booker:tour-detail' tour.id %}" class="btn-details">More details</a>
             </div>
           </div>
