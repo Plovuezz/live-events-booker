@@ -1,3 +1,5 @@
+import random
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -17,10 +19,27 @@ class Band(models.Model):
     bio = models.TextField(null=True, blank=True)
     genres = models.ManyToManyField(Genre, related_name="bands")
     avatar = models.ImageField(upload_to="bands/")
+    invite_code = models.CharField(max_length=255, unique=True, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
+    def save(
+        self,
+        force_insert = False,
+        force_update = False,
+        using = None,
+        update_fields = None,
+    ):
+        if not self.invite_code:
+            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+            while True:
+                code = ''.join(random.choice(alphabet) for _ in range(10))
+                if not Band.objects.filter(invite_code=code).exists():
+                    self.invite_code = code
+                    break
+
+        super().save(force_insert, force_update, using, update_fields)
 
 class BandInfo(models.Model):
     web_page = models.URLField(null=True, blank=True)

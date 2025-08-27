@@ -18,7 +18,7 @@
         </li>
         {% if user.band %}
           <li class="nav-item">
-          <a class="nav-link nav-text-black" href="#">Band</a>
+          <a class="nav-link nav-text-black" href="{% url 'booker:profile-band' %}">Band</a>
           </li>
         {% endif %}
       </ul>

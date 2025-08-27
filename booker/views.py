@@ -19,7 +19,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views import generic
 from stone.backends.python_rsrc.stone_validators import ValidationError
 
-from booker.forms import UserRegistrationForm, UserUpdateForm
+from booker.forms import UserRegistrationForm, UserUpdateForm, UserBandAddForm
 from booker.models import Event, Tour, Ticket, User, Band, Zone
 from booker.services.token_service import account_activation_token
 
@@ -34,7 +34,10 @@ class IndexListView(generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        tours = Tour.objects.filter(is_active=True).order_by("start_time")[:5]
+        tours = Tour.objects.filter(
+            is_active=True
+        ).select_related("initiator").order_by("start_time")[:5]
+
         bands = Band.objects.all()[:14]
         context["tour_list"] = tours
         context["band_list"] = bands
@@ -137,11 +140,12 @@ def activate(request, uid, token):
     return redirect("booker:index")
 
 
+@login_required
 def to_profile(request):
     return render(request, "booker/user_profile.html")
 
 
-class UserUpdateView(generic.UpdateView):
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "booker/user_profile_update.html"
@@ -151,13 +155,27 @@ class UserUpdateView(generic.UpdateView):
         return self.request.user
 
 
-class CustomPasswordChangeView(PasswordChangeView):
+class UserAddBandView(LoginRequiredMixin, generic.UpdateView):
+    model = User
+    form_class = UserBandAddForm
+    template_name = "booker/user_profile_update.html"
+    success_url = reverse_lazy("booker:profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        self.object.band = form.cleaned_data["invite_code"]
+        return super().form_valid(form)
+
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangeForm
-    template_name = "booker/user_change_password.html"
+    template_name = "booker/user_profile_update.html"
     success_url = reverse_lazy("booker:profile")
 
 
-class TicketListView(generic.ListView):
+class TicketListView(LoginRequiredMixin, generic.ListView):
     model = Ticket
     template_name = "booker/user_profile_tickets.html"
 
@@ -168,6 +186,20 @@ class TicketListView(generic.ListView):
         ).select_related(
             "zone", "event", "zone__location", "event__band"
         ).order_by("-added_at")
+
+
+class UserBandDetail(LoginRequiredMixin, generic.DetailView):
+    model = Band
+    template_name = "booker/user_profile_band.html"
+
+    def get_object(self, queryset = None):
+        return self.request.user.band
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["event_list"] = self.object.events.select_related("location", "tour").all().order_by("-date")
+        context["tour_list"] = self.object.tours.select_related("initiator").all().order_by("-start_time")
+        return context
 
 
 class BookTicketView(LoginRequiredMixin, generic.ListView):
@@ -199,7 +231,11 @@ class BookTicketView(LoginRequiredMixin, generic.ListView):
         )
 
         context["zones"] = [(zone, zone.capacity - zone.sold) for zone in zones]
-
+        tickets = context["object_list"]
+        total_amount = sum(ticket.zone.price for ticket in tickets)
+        total_quantity = len(tickets)
+        context["total_amount"] = total_amount
+        context["total_quantity"] = total_quantity
         return context
 
 

@@ -13,8 +13,13 @@
         <a class="nav-link nav-text-black" href="{% url 'booker:profile' %}">Account</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-text-black active" href="#">Tickets</a>
+        <p class="nav-link nav-text-black active">Tickets</p>
       </li>
+      {% if user.band %}
+        <li class="nav-item">
+          <a class="nav-link nav-text-black" href="{% url 'booker:profile-band' %}">Band</a>
+        </li>
+      {% endif %}
 
     </ul>
 

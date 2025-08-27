@@ -4,7 +4,7 @@ from booker.views import (
     IndexListView, EventListView, EventDetailView,
     TourDetailView, TourListView, activate,
     register_view, logout_view, to_profile, TicketListView, UserUpdateView, CustomPasswordChangeView, BandListView,
-    BookTicketView, buy_ticket, delete_ticket, create_ticket
+    BookTicketView, buy_ticket, delete_ticket, create_ticket, UserAddBandView, UserBandDetail
 )
 
 app_name = "booker"
@@ -17,6 +17,8 @@ urlpatterns = [
     path("profile/", to_profile, name="profile"),
     path("profile/tickets/", TicketListView.as_view(), name="profile-tickets"),
     path("profile/update/", UserUpdateView.as_view(), name="profile-user-update"),
+    path("profile/band/add/", UserAddBandView.as_view(), name="profile-band-add"),
+    path("profile/band/", UserBandDetail.as_view(), name="profile-band"),
     path("profile/password/update/", CustomPasswordChangeView.as_view(), name="profile-password-update"),
     path("tickets/<int:pk>/", BookTicketView.as_view(), name="book-ticket"),
     path("tickets/<int:event_id>/buy/", buy_ticket, name="buy-ticket"),

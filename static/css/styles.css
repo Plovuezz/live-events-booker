@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 .navbar {
@@ -54,9 +55,18 @@ html {
 
 body {
   margin-top: 150px !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+main {
+  flex: 1 0 !important;
+}
 
+footer {
+  flex-shrink: 0;
+}
 
 
 
@@ -175,8 +185,8 @@ body {
 
 .band-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* збільшили мінімальну ширину */
-  gap: 2.5rem; /* трохи більше відстані між картками */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.5rem;
   justify-items: center;
   padding: 40px;
 }
@@ -187,11 +197,11 @@ body {
 }
 
 .band-card:hover {
-  transform: translateY(-5px); /* легкий підйом при наведенні */
+  transform: translateY(-5px);
 }
 
 .band-avatar {
-  width: 200px; /* більше фото */
+  width: 200px;
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
@@ -207,11 +217,9 @@ body {
 .band-name {
   margin-top: 12px;
   font-weight: 700;
-  font-size: 16px; /* трохи більший шрифт */
+  font-size: 16px;
   text-transform: uppercase;
-  color: #333; /* темніший текст для кращого контрасту */
+  color: #333;
 }
-
-
 
 

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import (
 )
 from django.core.exceptions import ValidationError
 
-from booker.models import User
+from booker.models import User, Band
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -28,3 +28,19 @@ class UserUpdateForm(forms.ModelForm):
         if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             raise ValidationError("Username already exists!")
         return username
+
+
+class UserBandAddForm(forms.ModelForm):
+    invite_code = forms.CharField(max_length=10)
+
+    class Meta:
+        model = User
+        fields = ["invite_code"]
+
+    def clean_invite_code(self):
+        code = self.cleaned_data["invite_code"]
+        try:
+            band = Band.objects.get(invite_code=code)
+        except Band.DoesNotExist:
+            raise ValidationError("No band with this code!")
+        return band

@@ -24,12 +24,6 @@
         <p>No events for now...</p>
       {% endif %}
     </div>
-    <div style="display: flex; justify-content: center">
-      <a href="{% url 'booker:tour-list' %}" class="btn-index">All Events</a>
-    </div>
-
-  <br>
-  <br>
 
   <div style="background-color: #1a1a1a; padding-top: 40px; padding-bottom: 20px">
     <div class="text-center my-4">
@@ -53,12 +47,10 @@
         <p>No tours for now...</p>
       {% endif %}
     </div>
-
-    <br>
-    <div style="display: flex; justify-content: center">
-      <a href="{% url 'booker:tour-list' %}" class="btn-index2">All Tours</a>
+    <div class="text-center mt-3">
+      <a href="{% url 'booker:tour-list' %}" class="btn btn-index2">See all tours</a>
+      <br>
     </div>
-    <br>
   </div>
 
 

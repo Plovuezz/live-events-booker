@@ -1,4 +1,4 @@
-<div class="card shadow-sm h-100">
+<div class="card shadow-sm h-100" style="min-height: 500px;">
   <div class="card-body d-flex flex-column">
     <h5 class="card-title mb-3">Your Tickets</h5>
 
@@ -7,7 +7,6 @@
         {% for ticket in ticket_list %}
           <div class="d-flex justify-content-between align-items-center mb-2"
                style="background:#ffffff; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.5); padding:10px 12px; position:relative; overflow:hidden;">
-
 
             <span style="font-weight:bold; color:#f03c24;">{{ ticket.zone.name }}</span>
 
@@ -27,7 +26,7 @@
     <div class="border-top pt-2 mt-3 d-flex justify-content-between fw-bold">
       <span>Altogether:</span>
       <span>
-        0 pc • 0 ₴
+        {{ total_quantity }} pcs • {{ total_amount }} ₴
       </span>
     </div>
 
@@ -36,4 +35,3 @@
     </a>
   </div>
 </div>
-
