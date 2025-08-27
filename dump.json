@@ -1,0 +1,881 @@
+[
+{
+    "model": "booker.genre",
+    "pk": 5,
+    "fields": {
+        "name": "Hardcore"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 6,
+    "fields": {
+        "name": "Melodic Hardcore"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 7,
+    "fields": {
+        "name": "Beatdown Hardcore"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 8,
+    "fields": {
+        "name": "Metalcore"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 9,
+    "fields": {
+        "name": "Mid-west Emo"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 10,
+    "fields": {
+        "name": "Indie"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 11,
+    "fields": {
+        "name": "Pop"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 12,
+    "fields": {
+        "name": "Metal"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 13,
+    "fields": {
+        "name": "Black Metal"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 14,
+    "fields": {
+        "name": "Death Metal"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 15,
+    "fields": {
+        "name": "Folk"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 16,
+    "fields": {
+        "name": "Rap"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 17,
+    "fields": {
+        "name": "Death Core"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 18,
+    "fields": {
+        "name": "Country"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 19,
+    "fields": {
+        "name": "Punk"
+    }
+},
+{
+    "model": "booker.genre",
+    "pk": 20,
+    "fields": {
+        "name": "Rock"
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 3,
+    "fields": {
+        "name": "Bring Me The Horizon",
+        "bio": "Bring Me the Horizon is a British rock band formed in Sheffield in 2004. Known for evolving their sound from deathcore roots to a blend of metalcore, electronic, pop, and alternative rock, the band has become one of the most influential acts in modern heavy music. With frontman Oli Sykes at the helm, BMTH is celebrated for their genre-bending style, energetic live shows, and chart-topping albums like Sempiternal, That's the Spirit, and amo.",
+        "avatar": "bands\\bmth_01gy8sG.jpg",
+        "invite_code": "6DL02C41XX",
+        "genres": [
+            8,
+            11,
+            17
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 4,
+    "fields": {
+        "name": "Counterparts",
+        "bio": "Counterparts is a Canadian melodic hardcore band formed in 2007 in Hamilton, Ontario. Known for their emotional intensity, technical riffs, and raw honesty, the band blends hardcore aggression with melodic and often melancholic atmospheres. Over the years, they’ve built a strong reputation in the hardcore/metalcore scene for their relentless touring and cathartic live performances.",
+        "avatar": "bands/counterparts.jpg",
+        "invite_code": "STCAD6G20N",
+        "genres": [
+            6
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 5,
+    "fields": {
+        "name": "Sick Solution",
+        "bio": "Sick Solution is a Ukrainian hardcore/metalcore band blending heavy breakdowns with raw energy and emotional intensity. Their music combines aggressive riffs, powerful vocals, and a relentless live presence that reflects modern hardcore spirit.",
+        "avatar": "bands/sickies.png",
+        "invite_code": "0D9USPNWMC",
+        "genres": [
+            6,
+            7,
+            8
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 6,
+    "fields": {
+        "name": "Knocked Loose",
+        "bio": "Knocked Loose is an American hardcore band from Oldham County, Kentucky. Known for their raw aggression, crushing breakdowns, and emotionally charged lyrics, they’ve become one of the most influential modern hardcore acts, bringing intensity to both records and live shows.",
+        "avatar": "bands/knocked_loose.jpg",
+        "invite_code": "TYMYKAY8W5",
+        "genres": [
+            7
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 7,
+    "fields": {
+        "name": "Marevo",
+        "bio": "Marevo is a band from Odesa, formed in the summer of 2020. Emerging as an improvisational trio of music academy musicians during the lockdown, their music blends minimalistic jazz, ethnic rhythms, and classical compositional techniques into experimental soundscapes. The name “Marevo” means a mirage or “dry fog,” reflecting their aim to create immersive, dreamlike musical experiences.",
+        "avatar": "bands/marevo.jpg",
+        "invite_code": "HOI0EJKBSQ",
+        "genres": [
+            6
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 8,
+    "fields": {
+        "name": "True Tough",
+        "bio": "True Tough is a band blending aggressive metalcore riffs with melodic hardcore elements, delivering intense energy and raw emotion in their music. Their sound balances heaviness with memorable hooks, appealing to fans of modern hardcore and metalcore.",
+        "avatar": "bands/true_tough.jpg",
+        "invite_code": "SFQSTTJ73H",
+        "genres": [
+            7
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 9,
+    "fields": {
+        "name": "Hot Mulligan",
+        "bio": "Hot Mulligan is an emo and indie rock band known for heartfelt lyrics, catchy melodies, and energetic performances. Their music blends emotional storytelling with dynamic guitar-driven arrangements, resonating with fans of modern emo and pop-punk.",
+        "avatar": "bands/hot_mulligan.jpg",
+        "invite_code": "CHTEVQ9HAO",
+        "genres": [
+            9
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 10,
+    "fields": {
+        "name": "White Ward",
+        "bio": "White Ward is a Ukrainian avant-garde black metal band that fuses atmospheric soundscapes with industrial and post-rock elements. Known for their haunting melodies and experimental approach, they push the boundaries of extreme metal while creating immersive, cinematic experiences.",
+        "avatar": "bands/white_ward.jpg",
+        "invite_code": "4HARIEUMBH",
+        "genres": [
+            13
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 11,
+    "fields": {
+        "name": "Bad Omens",
+        "bio": "Bad Omens is an American metalcore band from Richmond, Virginia, known for blending heavy riffs with melodic hooks and atmospheric production. Their sound combines aggressive energy with introspective lyrics, earning them recognition in the modern metalcore scene.",
+        "avatar": "bands/bad_omens.jpg",
+        "invite_code": "KRIECBSKQI",
+        "genres": [
+            8,
+            11
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 12,
+    "fields": {
+        "name": "Zwyntar",
+        "bio": "Zwyntar is a Ukrainian dark country band from Kyiv, blending elements of Southern Gothic Americana with Ukrainian folklore. Formed in 2015, their music intertwines tales of sin, redemption, and the supernatural, drawing parallels between American and Ukrainian traditions. Their performances evoke the atmosphere of a shamanic ritual, where old-world narratives meet haunting melodies.",
+        "avatar": "bands/zwyntar.jpg",
+        "invite_code": "68BEFLLEF6",
+        "genres": [
+            15,
+            18
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 13,
+    "fields": {
+        "name": "Hammerman Znyshue Virusy",
+        "bio": "Hammerman Destroys Viruses is a Ukrainian satirical punk band known for their dark humor, provocative lyrics, and energetic performances. They blend punk, rock, and theatrical elements to create politically charged and socially reflective music.",
+        "avatar": "bands/hzv.jpg",
+        "invite_code": "8XY11ZKNPX",
+        "genres": [
+            19,
+            20
+        ]
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 3,
+    "fields": {
+        "web_page": "https://www.bmthofficial.com/",
+        "band": 3
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 4,
+    "fields": {
+        "web_page": "https://counterpartsband.com/",
+        "band": 4
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 5,
+    "fields": {
+        "web_page": "https://www.instagram.com/sicksolutionhc/",
+        "band": 5
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 6,
+    "fields": {
+        "web_page": "https://knockedloose.com/?srsltid=AfmBOopUfynvSUFTfnBvrF6kzAOjR8eYBFQyavfJpXh6oAizRlRQ-uQz",
+        "band": 6
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 7,
+    "fields": {
+        "web_page": "https://marevo1.bandcamp.com/",
+        "band": 7
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 8,
+    "fields": {
+        "web_page": "https://www.instagram.com/true_tough/",
+        "band": 8
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 9,
+    "fields": {
+        "web_page": "https://hotmulligan.band/",
+        "band": 9
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 10,
+    "fields": {
+        "web_page": "https://whiteward.band/",
+        "band": 10
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 11,
+    "fields": {
+        "web_page": "https://www.badomensofficial.com/",
+        "band": 11
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 12,
+    "fields": {
+        "web_page": "http://zwyntar.com/",
+        "band": 12
+    }
+},
+{
+    "model": "booker.bandinfo",
+    "pk": 13,
+    "fields": {
+        "web_page": "https://www.instagram.com/hzvband/",
+        "band": 13
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 3,
+    "fields": {
+        "name": "Atlas Club",
+        "description": "Atlas Club Kyiv is a prominent music venue located in the heart of Kyiv, Ukraine. Originally established as \"Yunist\" during the 2013 Revolution of Dignity, it was later rebranded as Atlas. Since its inception, Atlas has become a central hub for live music, hosting a diverse array of international and Ukrainian artists across genres such as indie, rock, hip-hop, and electronic music. The venue boasts a main hall with a capacity of 1,100 and an intimate bar area, Barbara, accommodating 200 guests. In addition to its regular programming, Atlas is renowned for organizing the Atlas Festival, Ukraine's largest music festival, which features over 200 artists across multiple stages. Atlas continues to play a pivotal role in Kyiv's cultural landscape, fostering a vibrant music scene and supporting both emerging and established talent.",
+        "country": "Ukraine",
+        "city": "Kyiv",
+        "address": "Sichovykh Striltsiv Street, 37-41",
+        "photo": "locations/atlas.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 4,
+    "fields": {
+        "name": "Volume Club",
+        "description": "Volume Club Kyiv is a dynamic live music venue situated at 26/2 Harmatna Street, Kyiv, Ukraine. With a capacity ranging from 300 to 400 guests, it offers an intimate yet vibrant setting for a diverse array of events, including concerts, parties, and cultural gatherings. The club is renowned for its excellent sound system and versatile space, accommodating various formats from discos to rock performances. It serves as a platform for both emerging and established artists, contributing to Kyiv's rich cultural scene. Volume Club is operated by the team behind the legendary Kyiv rock club \"Barvy,\" ensuring a legacy of quality entertainment.",
+        "country": "Ukraine",
+        "city": "Kyiv",
+        "address": "26/2, Garmatna Street",
+        "photo": "locations/volume_club.png"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 5,
+    "fields": {
+        "name": "Otel’",
+        "description": "Otel’ Kyiv is an experimental cultural venue located at 31 Nyzhnoiurkivska Street in Kyiv's historic Podil district. Established in 2013 by video producers Pavlo Derhachov and Evgeniy Kostenko, Otel' began as a creative space for art and music, transforming over time into a multifaceted hub for live performances, electronic music events, and cultural gatherings. The venue occupies a 320 m² area within a former ribbon factory, featuring three halls, two bar zones, a lounge, backstage area, and a summer terrace at the foot of Shchekavytsia Hill. Equipped with a high-quality 7 kW five-band sound system, Otel' offers an acoustically optimized environment for immersive listening experiences.",
+        "country": "Ukraine",
+        "city": "Kyiv",
+        "address": "Nyzhnoyurkivska Street, 31",
+        "photo": "locations/otel.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 6,
+    "fields": {
+        "name": "FESTrepublic",
+        "description": "FESTrepublic is a dynamic cultural hub located at 24–26 Staroznesenska Street in Lviv, Ukraine. Situated just beyond Znesinnya Park near Zamkova Hill, it's approximately a 20-minute walk from Rynok Square .\r\nEstablished on the grounds of a former glass factory, FESTrepublic has transformed into a vibrant venue hosting a diverse array of events, including festivals, themed parties, concerts, and performances by top DJs and Ukrainian bands . The space encompasses multiple areas, such as the Event Hall, Club, Terrace, and Gastroli Hall, each offering unique atmospheres and experiences .",
+        "country": "Ukraine",
+        "city": "Lviv",
+        "address": "Staroznesenska, 24-26 entrance from, Korduby Street",
+        "photo": "locations/festrepublic.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 7,
+    "fields": {
+        "name": "Docker Pub",
+        "description": "Docker Pub Vinnytsia is a vibrant gastro-art pub located at 39 Kotsiubynskogo Avenue in Vinnytsia, Ukraine. Opened in December 2023, it extends the legacy of the original Docker Pub from Kyiv, bringing its unique blend of rock culture, live music, and quality cuisine to the heart of Vinnytsia .\r\nThe venue boasts a characteristic interior with natural wood furnishings and unique decor, creating an inviting atmosphere for music enthusiasts and food lovers alike. Docker Pub Vinnytsia hosts a variety of live performances, including tribute bands and local acts, covering genres such as rockabilly, West Coast rock, urban rock, and glam rock .",
+        "country": "Ukraine",
+        "city": "Vinnytsia",
+        "address": "Kotsiubynskyi Avenue, 39",
+        "photo": "locations/docekr_pub.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 8,
+    "fields": {
+        "name": "Lower hall",
+        "description": "Nyzhniy Zal — an atmospheric concert club in Lviv, located in a basement space, which adds a unique charm to its interior. Known for its intimate atmosphere and high-quality sound, the club attracts live music enthusiasts and creative events lovers.\r\n\r\nAt Nyzhniy Zal, performances by Ukrainian and international artists are regularly held, along with themed parties covering various music genres.\r\n\r\nThe club is also a popular venue for cultural events such as exhibitions, lectures, and film screenings, contributing to the cultural life of the city. Thanks to its location and distinctive atmosphere, Nyzhniy Zal has become an important part of Lviv’s music and cultural scene.",
+        "country": "Ukraine",
+        "city": "Lviv",
+        "address": "Danylo Halytskyi Square, 1",
+        "photo": "locations/nyjniy_zal.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 9,
+    "fields": {
+        "name": "More Music Club",
+        "description": "More Music Club is a prominent live music venue situated at 75 Pushkinska Street in Odessa, Ukraine. Known for its eclectic programming and vibrant atmosphere, it has become a central hub for both local and international artists. The club's calendar features a diverse range of events, including rock, punk, metal, electronic, and experimental performances. Upcoming highlights include performances by bands such as Hammerman Destroys Viruses, OMANA, and Apatia. The venue also hosts cultural events like the Slamovision poetry slam and album presentations by artists like Kvitykis. \r\nWith its commitment to showcasing emerging talent and fostering a dynamic cultural scene, More Music Club continues to be a cornerstone of Odessa's nightlife and music culture.",
+        "country": "Ukraine",
+        "city": "Odesa",
+        "address": "75 Italiyska St.",
+        "photo": "locations/more_music_club.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 10,
+    "fields": {
+        "name": "Poplavok Music Hall",
+        "description": "Poplavok Music Hall is a renowned concert venue situated in Dnipro, Ukraine, nestled along the picturesque Sicheslavska Naberezhna street. Housed within the iconic Poplavok floating restaurant, this intimate hall offers a unique setting for live performances. The venue is celebrated for its exceptional acoustics and distinctive round architecture, providing an immersive experience for attendees. \r\nWith a capacity accommodating approximately 80 to 100 guests, Poplavok Music Hall fosters a close-knit atmosphere where artists and audiences connect intimately. The venue regularly hosts a diverse array of events, including concerts spanning various genres such as rock, metal, electronic, and experimental music. Notable past performances include bands like Zwyntar, White Ward, Stoned Jesus, and Wildways.",
+        "country": "Ukraine",
+        "city": "Dnipro",
+        "address": "Naberezhnaya Sicheslavska St., 7",
+        "photo": "locations/poplavok_halll.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 11,
+    "fields": {
+        "name": "ART AREA \"DK\"",
+        "description": "ART AREA \"DK\" — a cultural center in Kharkiv, located at 13 Chernyshovska St.\r\n\r\nThis space combines a theater, music stage, gallery, cinema hall, and lecture area, creating a platform for diverse cultural events. Regular concerts, theater performances, lectures, and other activities promoting contemporary art take place here.\r\n\r\nFor up-to-date information on upcoming events and ticket purchases, visit ART AREA \"DK\"’s official resources.",
+        "country": "Ukraine",
+        "city": "Kharkiv",
+        "address": "Chernyshevska Street, 13",
+        "photo": "locations/art-area.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 12,
+    "fields": {
+        "name": "Na Poshti",
+        "description": "Na Poshti — a creative cluster in Ternopil, located at 4 Chornovola Street. This space combines gastronomy, art events, and cultural initiatives, providing a platform for contemporary art and culture. Na Poshti regularly hosts exhibitions, concerts, film screenings, and other events to support creative initiatives and bring the community together. Its mission is to be a cultural hub where everyone can find inspiration and support for their ideas.",
+        "country": "Ukraine",
+        "city": "Ternopil",
+        "address": "Chornovola Street, 4",
+        "photo": "locations/na_poshti.jpg"
+    }
+},
+{
+    "model": "booker.location",
+    "pk": 13,
+    "fields": {
+        "name": "Mahno Pub",
+        "description": "Makhno Pub is a creative and atmospheric pub located at 4A Mahdeburzkoho Prava Street in Dnipro. It blends a vintage 20th-century Ukrainian-style interior with cultural flair—complete with high ceilings, rustic décor, and nods to the legendary anarchist Nestor Makhno. \r\n\r\nThe venue includes two distinct spaces: the cozy Makhno Pub bar, serving traditional Ukrainian and European cuisine with a capacity of up to 70 guests, and the larger underwground concert hall \"Pidpillya Makhno\", capable of hosting live performances for 100–150 people in the main area and an additional balcony lounge for around 50 seated guests. \r\n\r\nWith a small stage, projector screen, quality sound and lighting, Makhno Pub hosts concerts, themed parties, and sports screenings, appealing to music lovers and cultural crowds alike.",
+        "country": "Ukraine",
+        "city": "Dnipro",
+        "address": "4A Mahdeburzkoho Prava Street",
+        "photo": "locations/mahno_pub.jpg"
+    }
+},
+{
+    "model": "booker.tour",
+    "pk": 2,
+    "fields": {
+        "description": "Vinnytsia School of Hardcore, ambassadors of Ramen Metal, brand names who have gone through the entire thorny path of the stages of the Fine City, are embarking on the largest all-Ukrainian tour in the entire history of the band's existence in support of the new mini-album \"1995\"!\r\n\r\n“1995 is the date of the foundation of Sik;\r\n1995 is Dusya, Tokha, Pasha and Tyoma;\r\n1995 is our mutual values ​​and experiences;\r\n1995 is us, but more depressed and sincere;\r\n1995 is new songs and concerts;\r\n1995 is the anniversary of the Vinnytsia school of hardcore, to which you are invited,” the band comments.\r\n\r\nThis fall, a mosaic of small tours will form a grand map of cities where Sika will share the happiness of playing new hits and time-tested bangers. Find your city, get your tickets, we'll hear from you soon👹\r\n\r\nPart of the proceeds will be transferred to the needs of the Azov State University brigade 🇺🇦",
+        "avatar": "tours/1995_tour.jpg",
+        "title": "1995 Tour💥",
+        "start_time": "2025-11-07T22:00:00Z",
+        "initiator": 5,
+        "is_active": true
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 3,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "250.00",
+        "capacity": 200,
+        "location": 11
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 4,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "500.00",
+        "capacity": 400,
+        "location": 3
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 5,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "350.00",
+        "capacity": 200,
+        "location": 7
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 6,
+    "fields": {
+        "name": "Hall with shelter",
+        "price": "500.00",
+        "capacity": 400,
+        "location": 6
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 7,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "350.00",
+        "capacity": 200,
+        "location": 8
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 8,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "350.00",
+        "capacity": 300,
+        "location": 9
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 9,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "350.00",
+        "capacity": 200,
+        "location": 12
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 10,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "400.00",
+        "capacity": 300,
+        "location": 5
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 11,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "300.00",
+        "capacity": 200,
+        "location": 10
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 12,
+    "fields": {
+        "name": "Fan Zone",
+        "price": "450.00",
+        "capacity": 300,
+        "location": 4
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 13,
+    "fields": {
+        "name": "Main Hall (Pidpillya Makhno)",
+        "price": "350.00",
+        "capacity": 150,
+        "location": 13
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 14,
+    "fields": {
+        "name": "Terrace",
+        "price": "1900.00",
+        "capacity": 1200,
+        "location": 6
+    }
+},
+{
+    "model": "booker.zone",
+    "pk": 15,
+    "fields": {
+        "name": "TestZone",
+        "price": "1.00",
+        "capacity": 2,
+        "location": 12
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 3,
+    "fields": {
+        "name": null,
+        "band": 5,
+        "tour": 2,
+        "location": 7,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-11-08T16:30:00Z",
+        "zones": [
+            5
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 4,
+    "fields": {
+        "name": null,
+        "band": 5,
+        "tour": 2,
+        "location": 9,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-11-09T16:30:00Z",
+        "zones": [
+            8
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 5,
+    "fields": {
+        "name": null,
+        "band": 5,
+        "tour": 2,
+        "location": 13,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-11-15T16:30:00Z",
+        "zones": [
+            13
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 6,
+    "fields": {
+        "name": null,
+        "band": 5,
+        "tour": 2,
+        "location": 5,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-12-29T16:30:00Z",
+        "zones": [
+            10
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 8,
+    "fields": {
+        "name": null,
+        "band": 5,
+        "tour": 2,
+        "location": 6,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-12-19T16:30:00Z",
+        "zones": [
+            6
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 9,
+    "fields": {
+        "name": null,
+        "band": 4,
+        "tour": null,
+        "location": 6,
+        "photo": "",
+        "description": "Counterparts now in Ukraine. Do not miss the oportunity to visit show where counterparts will play their hits and new material",
+        "is_active": true,
+        "date": "2025-10-30T17:00:00Z",
+        "zones": [
+            14
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 11,
+    "fields": {
+        "name": null,
+        "band": 9,
+        "tour": null,
+        "location": 3,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-11-28T16:00:00Z",
+        "zones": [
+            4
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 12,
+    "fields": {
+        "name": null,
+        "band": 3,
+        "tour": null,
+        "location": 3,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-08-29T15:00:00Z",
+        "zones": [
+            4
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 13,
+    "fields": {
+        "name": "Test",
+        "band": 11,
+        "tour": null,
+        "location": 12,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-09-29T21:36:03Z",
+        "zones": [
+            9,
+            15
+        ]
+    }
+},
+{
+    "model": "booker.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$AkPzQlKuCXrwVzpezjKj8n$O9sSSKllmmfazoX56y2g7FpOaN03hScbRWDZyDQru1Q=",
+        "last_login": "2025-08-27T19:03:49.579Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@admin.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-08-23T23:39:11.027Z",
+        "band": 5,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "booker.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$XIMHb8P6jje4Q4bp9DXO9O$ePvsUV1Cmk4E0NuG/jNMa7/BCD4ouBJF70vaxH4MZkw=",
+        "last_login": "2025-08-27T17:58:39.353Z",
+        "is_superuser": false,
+        "username": "cocojo6570",
+        "first_name": "Music",
+        "last_name": "Enjoyer",
+        "email": "cocojo6570@namestal.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-25T17:44:07.959Z",
+        "band": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "booker.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$WXailt100RoxTOFv2DYvnU$bR1Qu3PEFe+M3/NeVTYTCBAebLODxUfWBqPPgSfh+Fw=",
+        "last_login": "2025-08-27T18:56:47.719Z",
+        "is_superuser": false,
+        "username": "mayiv33073",
+        "first_name": "Project",
+        "last_name": "Test",
+        "email": "mayiv33073@litepax.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-27T18:55:54.837Z",
+        "band": 5,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 37,
+    "fields": {
+        "user": 8,
+        "event": 9,
+        "zone": 14,
+        "added_at": "2025-08-27T19:02:24.602Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 38,
+    "fields": {
+        "user": 8,
+        "event": 9,
+        "zone": 14,
+        "added_at": "2025-08-27T19:02:25.771Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 49,
+    "fields": {
+        "user": 3,
+        "event": 13,
+        "zone": 15,
+        "added_at": "2025-08-27T21:36:40.246Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 50,
+    "fields": {
+        "user": 3,
+        "event": 13,
+        "zone": 15,
+        "added_at": "2025-08-27T21:36:41.045Z",
+        "status": "purchased"
+    }
+}
+]
