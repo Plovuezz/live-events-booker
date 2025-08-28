@@ -129,7 +129,7 @@ MEDIA_URL = "media/"
 
 STORAGES = {
     "default": {
-        "BACKEND": "base.storage.DropboxStorage",
+        "BACKEND": "base.storage.WindowsCompatibleDropboxStorage",
         "OPTIONS": {
             "oauth2_access_token": os.getenv("DROPBOX_ACCESS_TOKEN"),
             "oauth2_refresh_token": os.getenv("DROPBOX_REFRESH_TOKEN"),
