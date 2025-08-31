@@ -338,5 +338,3 @@ def buy_ticket(request, event_id):
 
     messages.error(request, "You have no tickets in cart or tickets reservation time expired")
     return redirect("booker:book-ticket", pk=event_id)
-
-
