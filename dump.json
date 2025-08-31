@@ -117,12 +117,12 @@
     "fields": {
         "name": "Bring Me The Horizon",
         "bio": "Bring Me the Horizon is a British rock band formed in Sheffield in 2004. Known for evolving their sound from deathcore roots to a blend of metalcore, electronic, pop, and alternative rock, the band has become one of the most influential acts in modern heavy music. With frontman Oli Sykes at the helm, BMTH is celebrated for their genre-bending style, energetic live shows, and chart-topping albums like Sempiternal, That's the Spirit, and amo.",
-        "avatar": "bands\\bmth_01gy8sG.jpg",
+        "avatar": "bands/bmth.jpg",
         "invite_code": "6DL02C41XX",
         "genres": [
             8,
-            11,
-            17
+            17,
+            11
         ]
     }
 },
@@ -148,9 +148,9 @@
         "avatar": "bands/sickies.png",
         "invite_code": "0D9USPNWMC",
         "genres": [
+            8,
             6,
-            7,
-            8
+            7
         ]
     }
 },
@@ -242,8 +242,8 @@
         "avatar": "bands/zwyntar.jpg",
         "invite_code": "68BEFLLEF6",
         "genres": [
-            15,
-            18
+            18,
+            15
         ]
     }
 },
@@ -258,6 +258,19 @@
         "genres": [
             19,
             20
+        ]
+    }
+},
+{
+    "model": "booker.band",
+    "pk": 14,
+    "fields": {
+        "name": "Вусата Соня",
+        "bio": "З глибин «морозної Норвегії» виринає гурт, який ламає стереотипи про серйозність блек-металу. Вусата Соня – це тріумф темряви, абсурду та густих вусів. Їхня музика — суміш крижаної атмосфери, сатиричних текстів і шаленої енергетики, що одночасно викликає і тремтіння, і сміх.\r\nНа сцені «Вусата Соня» створює справжній ритуал: драматичні розгони, зловісні крики та епічні рифи переплітаються з абсурдними образами й іронією. Це не просто концерт — це чорна комедія у форматі блек-метал-шоу.\r\nПриготуйтесь до нічного занурення у світ, де морок межує з гротеском, а холодна норвезька містика отримує український гуморний присмак.",
+        "avatar": "bands/вусата_сонька.png",
+        "invite_code": "Q2P4OF4ZP8",
+        "genres": [
+            13
         ]
     }
 },
@@ -482,6 +495,18 @@
     }
 },
 {
+    "model": "booker.location",
+    "pk": 14,
+    "fields": {
+        "name": "Na Hati",
+        "description": "",
+        "country": "Ukraine",
+        "city": "Fastiv",
+        "address": "Ivana Stupaka 21",
+        "photo": ""
+    }
+},
+{
     "model": "booker.tour",
     "pk": 2,
     "fields": {
@@ -490,6 +515,18 @@
         "title": "1995 Tour💥",
         "start_time": "2025-11-07T22:00:00Z",
         "initiator": 5,
+        "is_active": true
+    }
+},
+{
+    "model": "booker.tour",
+    "pk": 3,
+    "fields": {
+        "description": "2025 Tour",
+        "avatar": "tours/f403a7a987560c72.png",
+        "title": "2025 Tour",
+        "start_time": "2025-09-18T21:00:00Z",
+        "initiator": 14,
         "is_active": true
     }
 },
@@ -678,7 +715,7 @@
     "model": "booker.event",
     "pk": 6,
     "fields": {
-        "name": null,
+        "name": "123",
         "band": 5,
         "tour": 2,
         "location": 5,
@@ -778,11 +815,57 @@
     }
 },
 {
+    "model": "booker.event",
+    "pk": 15,
+    "fields": {
+        "name": null,
+        "band": 13,
+        "tour": null,
+        "location": 11,
+        "photo": "",
+        "description": "",
+        "is_active": true,
+        "date": "2025-08-30T15:41:15Z",
+        "zones": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+        ]
+    }
+},
+{
+    "model": "booker.event",
+    "pk": 16,
+    "fields": {
+        "name": "Вусата Соня",
+        "band": 14,
+        "tour": 3,
+        "location": 14,
+        "photo": "events/вусата_соня.png",
+        "description": "Гурт Вусата Соня вирушає в свій епічний тур містами України! Готуйтесь до вечорів, де блек-метал зустрічає гумор, а темрява – неймовірну сценічну енергетику.\r\n\r\nНа вас чекають:\r\n\r\nЗловісні рифи та грізні барабанні розгони;\r\n\r\nАбсурдні костюми та театралізовані шоу;\r\n\r\nГусті вуса, що заслоняють навіть сценічні прожектори;\r\n\r\nІ, звісно, море сміху серед темряви.\r\n\r\nНе пропустіть шанс відчути магію «Вусатої Соні» наживо та зануритися в атмосферу чорного металу з легким комедійним присмаком.",
+        "is_active": true,
+        "date": "2025-09-18T21:00:00Z",
+        "zones": [
+            10
+        ]
+    }
+},
+{
     "model": "booker.user",
     "pk": 3,
     "fields": {
         "password": "pbkdf2_sha256$1000000$AkPzQlKuCXrwVzpezjKj8n$O9sSSKllmmfazoX56y2g7FpOaN03hScbRWDZyDQru1Q=",
-        "last_login": "2025-08-27T19:03:49.579Z",
+        "last_login": "2025-08-28T15:56:48.199Z",
         "is_superuser": true,
         "username": "admin",
         "first_name": "",
@@ -801,7 +884,7 @@
     "pk": 7,
     "fields": {
         "password": "pbkdf2_sha256$1000000$XIMHb8P6jje4Q4bp9DXO9O$ePvsUV1Cmk4E0NuG/jNMa7/BCD4ouBJF70vaxH4MZkw=",
-        "last_login": "2025-08-27T17:58:39.353Z",
+        "last_login": "2025-08-27T23:04:26.607Z",
         "is_superuser": false,
         "username": "cocojo6570",
         "first_name": "Music",
@@ -830,6 +913,44 @@
         "is_active": true,
         "date_joined": "2025-08-27T18:55:54.837Z",
         "band": 5,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "booker.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Io4vb0NUtJVA9YETGaSxoE$evL0X7iXUYCcaTm5gYTeHD2J3aDsb4aF7eVguK+C6Wo=",
+        "last_login": "2025-08-28T16:00:51.162Z",
+        "is_superuser": false,
+        "username": "PisyaPopa",
+        "first_name": "Pisya",
+        "last_name": "Popa",
+        "email": "cowej63663@iotrama.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-28T14:30:34.491Z",
+        "band": 13,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "booker.user",
+    "pk": 10,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$EPNHSq4U43Wz5rZF9p8gf7$ZP5/GQpoS7BUcZVrbwNHlMzid3g0Uq/zumLRBy4FYNI=",
+        "last_login": "2025-08-28T15:35:25.761Z",
+        "is_superuser": false,
+        "username": "Bratiik88AYE",
+        "first_name": "Андрій",
+        "last_name": "Вітюк",
+        "email": "2ultraowner@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-28T15:34:26.717Z",
+        "band": null,
         "groups": [],
         "user_permissions": []
     }
@@ -876,6 +997,149 @@
         "zone": 15,
         "added_at": "2025-08-27T21:36:41.045Z",
         "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 51,
+    "fields": {
+        "user": 9,
+        "event": 9,
+        "zone": 14,
+        "added_at": "2025-08-28T14:34:52.513Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 52,
+    "fields": {
+        "user": 9,
+        "event": 12,
+        "zone": 4,
+        "added_at": "2025-08-28T14:56:45.091Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 53,
+    "fields": {
+        "user": 9,
+        "event": 13,
+        "zone": 9,
+        "added_at": "2025-08-28T15:40:13.351Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 54,
+    "fields": {
+        "user": 3,
+        "event": 11,
+        "zone": 4,
+        "added_at": "2025-08-28T15:41:55.460Z",
+        "status": "purchased"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 55,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 4,
+        "added_at": "2025-08-28T15:46:13.005Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 56,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 6,
+        "added_at": "2025-08-28T15:46:13.552Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 57,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 5,
+        "added_at": "2025-08-28T15:46:13.989Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 58,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 8,
+        "added_at": "2025-08-28T15:46:32.077Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 59,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 7,
+        "added_at": "2025-08-28T15:46:32.646Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 60,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 10,
+        "added_at": "2025-08-28T15:46:33.291Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 61,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 6,
+        "added_at": "2025-08-28T15:46:33.884Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 62,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 12,
+        "added_at": "2025-08-28T15:46:34.192Z",
+        "status": "reserved"
+    }
+},
+{
+    "model": "booker.ticket",
+    "pk": 63,
+    "fields": {
+        "user": 9,
+        "event": 6,
+        "zone": 14,
+        "added_at": "2025-08-28T15:46:34.407Z",
+        "status": "reserved"
     }
 }
 ]

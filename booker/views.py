@@ -13,7 +13,7 @@ from django.db.models import Count, Q
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode
 from django.views import generic
@@ -196,8 +196,8 @@ class UserBandDetail(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["event_list"] = self.object.events.select_related("location", "tour").all().order_by("-date")
-        context["tour_list"] = self.object.tours.select_related("initiator").all().order_by("-start_time")
+        context["event_list"] = self.object.events.select_related("location", "tour").order_by("-date")
+        context["tour_list"] = self.object.tours.select_related("initiator").order_by("-start_time")
         return context
 
 
@@ -209,6 +209,9 @@ class BandUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "booker/band_form_update.html"
     success_url = reverse_lazy("booker:profile-band")
 
+    def get_queryset(self):
+        return Band.objects.filter(members=self.request.user)
+
 
 class TourUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tour
@@ -219,10 +222,16 @@ class TourUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "booker/band_form_update.html"
     success_url = reverse_lazy("booker:profile-band")
 
+    def get_queryset(self):
+        return Tour.objects.filter(initiator__members=self.request.user)
+
 
 class TourDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tour
     success_url = reverse_lazy("booker:profile-band")
+
+    def get_queryset(self):
+        return Tour.objects.filter(initiator__members=self.request.user)
 
 
 class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -234,10 +243,16 @@ class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "booker/band_form_update.html"
     success_url = reverse_lazy("booker:profile-band")
 
+    def get_queryset(self):
+        return Event.objects.filter(band__members=self.request.user)
+
 
 class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Event
     success_url = reverse_lazy("booker:profile-band")
+
+    def get_queryset(self):
+        return Event.objects.filter(band__members=self.request.user)
 
 
 class BookTicketView(LoginRequiredMixin, generic.ListView):
@@ -312,9 +327,16 @@ def delete_ticket(request, ticket_id):
 def buy_ticket(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
-    Ticket.objects.filter(
+    tickets_qr = Ticket.objects.filter(
         user=request.user,
         event=event
-    ).update(status=Ticket.Status.PURCHASED)
+    )
 
-    return render(request, "booker/purchase_success.html")
+    if tickets_qr.exists():
+        tickets_qr.update(status=Ticket.Status.PURCHASED)
+        return render(request, "booker/purchase_success.html")
+
+    messages.error(request, "You have no tickets in cart or tickets reservation time expired")
+    return redirect("booker:book-ticket", pk=event_id)
+
+

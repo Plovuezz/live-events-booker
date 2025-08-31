@@ -85,7 +85,7 @@
                   <a class="btn btn-index" href="{% url 'booker:band-tour-update' tour.pk %}">Edit</a>
                   <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ tour.id }}">
                   Delete
-                </button>
+                  </button>
 
                 <div class="modal fade" id="deleteModal{{ tour.id }}" tabindex="-1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -101,7 +101,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
                         <form method="post" action="{% url 'booker:band-tour-delete' tour.pk %}">
                           {% csrf_token %}
-                          <button type="submit" class="btn btn-danger">Yes, delete</button>
+                          <button type="submit" class="btn btn-ticket">Yes, delete</button>
                         </form>
                       </div>
                     </div>
@@ -162,7 +162,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
                         <form method="post" action="{% url 'booker:band-event-delete' event.pk %}">
                           {% csrf_token %}
-                          <button type="submit" class="btn btn-danger">Yes, delete</button>
+                          <button type="submit" class="btn btn-ticket">Yes, delete</button>
                         </form>
                       </div>
                     </div>

@@ -24,13 +24,7 @@ class Band(models.Model):
     def __str__(self):
         return self.name
 
-    def save(
-        self,
-        force_insert = False,
-        force_update = False,
-        using = None,
-        update_fields = None,
-    ):
+    def save(self, **kwargs):
         if not self.invite_code:
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
             while True:
@@ -39,7 +33,8 @@ class Band(models.Model):
                     self.invite_code = code
                     break
 
-        super().save(force_insert, force_update, using, update_fields)
+        super().save(**kwargs)
+
 
 class BandInfo(models.Model):
     web_page = models.URLField(null=True, blank=True)
