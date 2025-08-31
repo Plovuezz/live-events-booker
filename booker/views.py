@@ -330,7 +330,7 @@ def buy_ticket(request, event_id):
     tickets_qr = Ticket.objects.filter(
         user=request.user,
         event=event
-    )
+    ).filter(status=Ticket.Status.RESERVED)
 
     if tickets_qr.exists():
         tickets_qr.update(status=Ticket.Status.PURCHASED)
