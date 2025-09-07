@@ -5,7 +5,6 @@ from django.utils._os import safe_join
 from storages.backends.dropbox import DropboxStorage
 
 
-
 class WindowsCompatibleDropboxStorage(DropboxStorage):
     CACHE_TTL = 60 * 60 * 2
 

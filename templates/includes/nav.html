@@ -24,14 +24,14 @@
             <i class="bi bi-person-circle"></i> {{ user.username }}
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-            <li><a class="dropdown-item" href="{% url 'booker:profile' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'booker:logout' %}">Logout</a></li>
+            <li><a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a></li>
           </ul>
         </li>
         {% else %}
         <li class="nav-item"><a class="nav-link nav-text" href="{% url 'login' %}">Login</a></li>
-        <li class="nav-item"><a class="nav-link nav-text" href="{% url 'booker:register' %}">Sign up</a></li>
+        <li class="nav-item"><a class="nav-link nav-text" href="{% url 'user:register' %}">Sign up</a></li>
         {% endif %}
       </ul>
     </div>

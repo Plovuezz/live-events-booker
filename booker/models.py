@@ -1,5 +1,7 @@
 import random
 
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -26,9 +28,9 @@ class Band(models.Model):
 
     def save(self, **kwargs):
         if not self.invite_code:
-            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             while True:
-                code = ''.join(random.choice(alphabet) for _ in range(10))
+                code = "".join(random.choice(alphabet) for _ in range(10))
                 if not Band.objects.filter(invite_code=code).exists():
                     self.invite_code = code
                     break
@@ -38,9 +40,7 @@ class Band(models.Model):
 
 class BandInfo(models.Model):
     web_page = models.URLField(null=True, blank=True)
-    band = models.OneToOneField(
-        Band, on_delete=CASCADE, related_name="info"
-    )
+    band = models.OneToOneField(Band, on_delete=CASCADE, related_name="info")
 
     def __str__(self):
         return f"{self.band.name} info"
@@ -74,9 +74,7 @@ class Zone(models.Model):
     name = models.CharField(max_length=255)
     price = models.DecimalField(decimal_places=2, max_digits=9)
     capacity = models.PositiveIntegerField()
-    location = models.ForeignKey(
-        Location, on_delete=CASCADE, related_name="zones"
-    )
+    location = models.ForeignKey(Location, on_delete=CASCADE, related_name="zones")
 
     def __str__(self):
         return f"{self.location.name}'s {self.name}"
@@ -88,9 +86,7 @@ class Event(models.Model):
     tour = models.ForeignKey(
         Tour, on_delete=CASCADE, related_name="events", null=True, blank=True
     )
-    location = models.ForeignKey(
-        Location, on_delete=CASCADE, related_name="events"
-    )
+    location = models.ForeignKey(Location, on_delete=CASCADE, related_name="events")
     zones = models.ManyToManyField(Zone, related_name="events")
     photo = models.ImageField(upload_to="events/", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -100,8 +96,7 @@ class Event(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["location", "date"],
-                name="unique_date_and_location"
+                fields=["location", "date"], name="unique_date_and_location"
             )
         ]
         ordering = ["date"]
@@ -112,16 +107,9 @@ class Event(models.Model):
             raise ValidationError({"date": "Date cant be in the past!"})
 
     def __str__(self):
-        return f"{self.band.name}, {self.location}, {self.date.strftime('%Y-%m-%d %H:%M')}"
-
-
-class User(AbstractUser):
-    band = models.ForeignKey(
-        Band, null=True, blank=True, on_delete=SET_NULL, related_name="members"
-    )
-
-    def __str__(self):
-        return f"{self.username} - {self.first_name} {self.last_name}"
+        return (
+            f"{self.band.name}, {self.location}, {self.date.strftime('%Y-%m-%d %H:%M')}"
+        )
 
 
 class Ticket(models.Model):
@@ -130,15 +118,9 @@ class Ticket(models.Model):
         PURCHASED = "purchased", "Purchased"
         CANCELLED = "cancelled", "Cancelled"
 
-    user = models.ForeignKey(
-        User, on_delete=CASCADE, related_name="tickets"
-    )
-    event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, related_name="tickets"
-    )
-    zone = models.ForeignKey(
-        Zone, related_name="tickets", on_delete=CASCADE
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="tickets")
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="tickets")
+    zone = models.ForeignKey(Zone, related_name="tickets", on_delete=CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=20,

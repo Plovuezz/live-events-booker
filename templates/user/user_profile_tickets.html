@@ -10,14 +10,14 @@
 
     <ul class="nav nav-tabs mb-4">
       <li class="nav-item">
-        <a class="nav-link nav-text-black" href="{% url 'booker:profile' %}">Account</a>
+        <a class="nav-link nav-text-black" href="{% url 'user:profile' %}">Account</a>
       </li>
       <li class="nav-item">
         <p class="nav-link nav-text-black active">Tickets</p>
       </li>
       {% if user.band %}
         <li class="nav-item">
-          <a class="nav-link nav-text-black" href="{% url 'booker:profile-band' %}">Band</a>
+          <a class="nav-link nav-text-black" href="{% url 'user:profile-band' %}">Band</a>
         </li>
       {% endif %}
 
@@ -59,7 +59,7 @@
     {% else %}
     <h5>No tickets history</h5>
     <br><br>
-    <a href="#" class="btn btn-ticket">To the poster</a>
+    <a href="{% url 'booker:index' %}" class="btn btn-ticket">To the poster</a>
     {% endif %}
 
     <div class="mt-4">

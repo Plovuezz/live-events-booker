@@ -3,10 +3,15 @@ from django.contrib.auth.admin import UserAdmin
 from django.db.models.aggregates import Sum
 
 from booker.models import (
-    Band, Genre, BandInfo, Location,
-    Tour, Event, Zone, User, Ticket
+    Band,
+    Genre,
+    BandInfo,
+    Location,
+    Tour,
+    Event,
+    Zone,
+    Ticket,
 )
-
 
 
 class BandInfoInline(admin.StackedInline):
@@ -21,7 +26,7 @@ class AdminBand(admin.ModelAdmin):
     ]
     search_fields = ["name"]
     ordering = ["name"]
-    list_filter = ("genres", )
+    list_filter = ("genres",)
     list_display = ("name", "display_genres")
 
     def get_queryset(self, request):
@@ -44,7 +49,10 @@ class AdminGenre(admin.ModelAdmin):
 class AdminLocation(admin.ModelAdmin):
     search_fields = ["name"]
     ordering = ["name"]
-    list_filter = ("city", "country",)
+    list_filter = (
+        "city",
+        "country",
+    )
     list_display = ("name", "city", "country", "total_capacity")
 
     def get_queryset(self, request):
@@ -60,7 +68,10 @@ class AdminLocation(admin.ModelAdmin):
 @admin.register(Event)
 class AdminEvent(admin.ModelAdmin):
     list_display = ("name", "band", "location", "is_active", "date")
-    list_filter = ("band__name", "location__name",)
+    list_filter = (
+        "band__name",
+        "location__name",
+    )
     ordering = ["-date"]
     search_fields = ["name", "band__name", "location__name"]
 
@@ -101,25 +112,3 @@ class AdminTicket(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.select_related("user", "event", "zone")
-
-
-@admin.register(User)
-class AdminUser(UserAdmin):
-    list_display = UserAdmin.list_display
-    fieldsets = UserAdmin.fieldsets + (
-        (("Band", {"fields": ("band",)}),)
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (
-            (
-                "Additional info",
-                {
-                    "fields": (
-                        "first_name",
-                        "last_name",
-                        "band",
-                    )
-                },
-            ),
-        )
-    )

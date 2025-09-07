@@ -13,11 +13,11 @@
           <p class="nav-link nav-text-black active">Account</p>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-text-black" href="{% url 'booker:profile-tickets' %}">Tickets</a>
+          <a class="nav-link nav-text-black" href="{% url 'user:profile-tickets' %}">Tickets</a>
         </li>
         {% if user.band %}
           <li class="nav-item">
-          <a class="nav-link nav-text-black" href="{% url 'booker:profile-band' %}">Band</a>
+          <a class="nav-link nav-text-black" href="{% url 'user:profile-band' %}">Band</a>
           </li>
         {% endif %}
       </ul>
@@ -29,18 +29,18 @@
 
         <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm hover-shadow">
           <span><i class="bi bi-pencil-fill"></i>  Edit your profile info</span>
-          <a href="{% url 'booker:profile-user-update' %}" class="btn btn-ticket">Edit</a>
+          <a href="{% url 'user:profile-user-update' %}" class="btn btn-ticket">Edit</a>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm hover-shadow">
           <span><i class="bi bi-pencil-fill"></i>  Change password</span>
-          <a href="{% url 'booker:profile-password-update' %}" class="btn btn-ticket">Change</a>
+          <a href="{% url 'user:profile-password-update' %}" class="btn btn-ticket">Change</a>
         </div>
 
         {% if not user.band %}
           <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm hover-shadow">
             <span><i class="bi bi-people-fill"></i>  Set a band</span>
-            <a href="{% url 'booker:profile-band-add' %}" class="btn btn-ticket">Set</a>
+            <a href="{% url 'user:profile-band-add' %}" class="btn btn-ticket">Set</a>
           </div>
         {% endif %}
 

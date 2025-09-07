@@ -11,10 +11,10 @@
 
     <ul class="nav nav-tabs mb-4">
       <li class="nav-item">
-        <a class="nav-link nav-text-black" href="{% url 'booker:profile' %}">Account</a>
+        <a class="nav-link nav-text-black" href="{% url 'user:profile' %}">Account</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-text-black" href="{% url 'booker:profile-tickets' %}">Tickets</a>
+        <a class="nav-link nav-text-black" href="{% url 'user:profile-tickets' %}">Tickets</a>
       </li>
       <li class="nav-item">
         <p class="nav-link nav-text-black active">Band</p>
@@ -55,7 +55,7 @@
         <div class="card shadow-sm border-0">
           <div class="card-body d-flex justify-content-between align-items-center">
             <span class="fw-bold">Edit band info</span>
-            <a class="btn btn-index" href="{% url 'booker:profile-band-update' band.pk %}">Edit</a>
+            <a class="btn btn-index" href="{% url 'user:profile-band-update' band.pk %}">Edit</a>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="col-md-3 text-end">
-                  <a class="btn btn-index" href="{% url 'booker:band-tour-update' tour.pk %}">Edit</a>
+                  <a class="btn btn-index" href="{% url 'user:band-tour-update' tour.pk %}">Edit</a>
                   <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ tour.id }}">
                   Delete
                   </button>
@@ -99,7 +99,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
-                        <form method="post" action="{% url 'booker:band-tour-delete' tour.pk %}">
+                        <form method="post" action="{% url 'user:band-tour-delete' tour.pk %}">
                           {% csrf_token %}
                           <button type="submit" class="btn btn-ticket">Yes, delete</button>
                         </form>
@@ -141,7 +141,7 @@
                 </div>
 
                 <div class="col-md-3 text-end">
-                  <a class="btn btn-index" href="{% url 'booker:band-event-update' event.pk %}">Edit</a>
+                  <a class="btn btn-index" href="{% url 'user:band-event-update' event.pk %}">Edit</a>
 
 
                 <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ event.id }}">
@@ -160,7 +160,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
-                        <form method="post" action="{% url 'booker:band-event-delete' event.pk %}">
+                        <form method="post" action="{% url 'user:band-event-delete' event.pk %}">
                           {% csrf_token %}
                           <button type="submit" class="btn btn-ticket">Yes, delete</button>
                         </form>

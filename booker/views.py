@@ -1,27 +1,14 @@
-from base64 import urlsafe_b64encode
-
 from django.contrib import messages
-from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordChangeView
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
 from django.db import transaction
 from django.db.models import Count, Q
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template.loader import render_to_string
-from django.urls import reverse_lazy, reverse
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode
 from django.views import generic
-from stone.backends.python_rsrc.stone_validators import ValidationError
 
-from booker.forms import UserRegistrationForm, UserUpdateForm, UserBandAddForm
-from booker.models import Event, Tour, Ticket, User, Band, Zone
-from booker.services.token_service import account_activation_token
+
+from booker.models import Event, Tour, Ticket, Band, Zone
 
 
 class IndexListView(generic.ListView):
@@ -30,13 +17,19 @@ class IndexListView(generic.ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.select_related("band", "tour", "location").filter(is_active=True).order_by("date")[:25]
+        return (
+            qs.select_related("band", "tour", "location")
+            .filter(is_active=True)
+            .order_by("date")[:25]
+        )
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        tours = Tour.objects.filter(
-            is_active=True
-        ).select_related("initiator").order_by("start_time")[:5]
+        tours = (
+            Tour.objects.filter(is_active=True)
+            .select_related("initiator")
+            .order_by("start_time")[:5]
+        )
 
         bands = Band.objects.all()[:14]
         context["tour_list"] = tours
@@ -65,196 +58,6 @@ class BandListView(generic.ListView):
     ordering = ["name"]
 
 
-def logout_view(request):
-    logout(request)
-    return redirect("booker:index")
-
-
-def activate_email(request, user, to_email):
-    mail_subject = "Activate your user account."
-
-    scheme = request.scheme
-    domain = get_current_site(request).domain
-    uid = urlsafe_b64encode(force_bytes(user.pk)).decode()
-    token = account_activation_token.make_token(user)
-
-    url = f"{scheme}://{domain}/activate/{uid}/{token}/"
-
-    html_content = render_to_string(
-        "registration/activate_account.html",
-        {"url": url, "user": user},
-    )
-    email = EmailMessage(mail_subject, body=html_content, to=[to_email])
-
-    email.content_subtype = "html"
-    if email.send():
-        messages.success(request, f"Activation link was sent to your email")
-    else:
-        messages.error(request, f"Problem sending confirmation email to {to_email}, check if you typed it correctly.")
-
-
-def register_view(request):
-    if request.method == "POST":
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            activate_email(request, user, form.cleaned_data.get('email'))
-            return redirect("login")
-
-        else:
-            for error in list(form.errors.values()):
-                messages.error(request, error)
-
-    else:
-        form = UserRegistrationForm()
-
-    return render(
-        request=request,
-        template_name="registration/register.html",
-        context={"form": form}
-        )
-
-
-def activate(request, uid, token):
-    User = get_user_model()
-
-    try:
-        uid = force_str(urlsafe_base64_decode(uid))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-
-        messages.success(request, "Now you can login your account.")
-        return redirect("login")
-    else:
-        messages.error(request, "Activation link is invalid!")
-
-    return redirect("booker:index")
-
-
-@login_required
-def to_profile(request):
-    return render(request, "booker/user_profile.html")
-
-
-class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = User
-    form_class = UserUpdateForm
-    template_name = "booker/user_profile_update.html"
-    success_url = reverse_lazy("booker:profile")
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
-class UserAddBandView(LoginRequiredMixin, generic.UpdateView):
-    model = User
-    form_class = UserBandAddForm
-    template_name = "booker/user_profile_update.html"
-    success_url = reverse_lazy("booker:profile")
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-    def form_valid(self, form):
-        self.object.band = form.cleaned_data["invite_code"]
-        return super().form_valid(form)
-
-
-class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
-    form_class = PasswordChangeForm
-    template_name = "booker/user_profile_update.html"
-    success_url = reverse_lazy("booker:profile")
-
-
-class TicketListView(LoginRequiredMixin, generic.ListView):
-    model = Ticket
-    template_name = "booker/user_profile_tickets.html"
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(
-            user=self.request.user,
-            status__in=[Ticket.Status.PURCHASED, Ticket.Status.CANCELLED]
-        ).select_related(
-            "zone", "event", "zone__location", "event__band"
-        ).order_by("-added_at")
-
-
-class UserBandDetail(LoginRequiredMixin, generic.DetailView):
-    model = Band
-    template_name = "booker/user_profile_band.html"
-
-    def get_object(self, queryset = None):
-        return self.request.user.band
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["event_list"] = self.object.events.select_related("location", "tour").order_by("-date")
-        context["tour_list"] = self.object.tours.select_related("initiator").order_by("-start_time")
-        return context
-
-
-class BandUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Band
-    fields = [
-        "name", "bio", "genres", "avatar",
-    ]
-    template_name = "booker/band_form_update.html"
-    success_url = reverse_lazy("booker:profile-band")
-
-    def get_queryset(self):
-        return Band.objects.filter(members=self.request.user)
-
-
-class TourUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Tour
-    fields = [
-        "description", "avatar", "title",
-        "start_time", "is_active"
-    ]
-    template_name = "booker/band_form_update.html"
-    success_url = reverse_lazy("booker:profile-band")
-
-    def get_queryset(self):
-        return Tour.objects.filter(initiator__members=self.request.user)
-
-
-class TourDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Tour
-    success_url = reverse_lazy("booker:profile-band")
-
-    def get_queryset(self):
-        return Tour.objects.filter(initiator__members=self.request.user)
-
-
-class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Event
-    fields = [
-        "name", "tour", "location", "zones",
-        "photo", "description", "is_active", "date"
-    ]
-    template_name = "booker/band_form_update.html"
-    success_url = reverse_lazy("booker:profile-band")
-
-    def get_queryset(self):
-        return Event.objects.filter(band__members=self.request.user)
-
-
-class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Event
-    success_url = reverse_lazy("booker:profile-band")
-
-    def get_queryset(self):
-        return Event.objects.filter(band__members=self.request.user)
-
-
 class BookTicketView(LoginRequiredMixin, generic.ListView):
     model = Ticket
     template_name = "booker/book_ticket.html"
@@ -263,7 +66,7 @@ class BookTicketView(LoginRequiredMixin, generic.ListView):
         return Ticket.objects.filter(
             user=self.request.user,
             event=self.kwargs["pk"],
-            status=Ticket.Status.RESERVED
+            status=Ticket.Status.RESERVED,
         )
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -277,9 +80,10 @@ class BookTicketView(LoginRequiredMixin, generic.ListView):
                 filter=Q(
                     tickets__event=event,
                     tickets__status__in=[
-                        Ticket.Status.RESERVED, Ticket.Status.PURCHASED
-                    ]
-                )
+                        Ticket.Status.RESERVED,
+                        Ticket.Status.PURCHASED,
+                    ],
+                ),
             )
         )
 
@@ -297,17 +101,17 @@ def create_ticket(request, zone_id, event_id):
     event = get_object_or_404(Event, id=event_id)
     zone = get_object_or_404(Zone, id=zone_id)
 
-    if zone.tickets.filter(
-        status__in=[Ticket.Status.RESERVED, Ticket.Status.PURCHASED]
-    ).count() >= zone.capacity:
+    if (
+        zone.tickets.filter(
+            status__in=[Ticket.Status.RESERVED, Ticket.Status.PURCHASED]
+        ).count()
+        >= zone.capacity
+    ):
         messages.error(request, "No tickets left")
         return redirect("booker:book-ticket")
 
     Ticket.objects.create(
-        user=request.user,
-        event=event,
-        zone=zone,
-        status=Ticket.Status.RESERVED
+        user=request.user, event=event, zone=zone, status=Ticket.Status.RESERVED
     )
     return redirect("booker:book-ticket", pk=event.id)
 
@@ -327,14 +131,15 @@ def delete_ticket(request, ticket_id):
 def buy_ticket(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
-    tickets_qr = Ticket.objects.filter(
-        user=request.user,
-        event=event
-    ).filter(status=Ticket.Status.RESERVED)
+    tickets_qr = Ticket.objects.filter(user=request.user, event=event).filter(
+        status=Ticket.Status.RESERVED
+    )
 
     if tickets_qr.exists():
         tickets_qr.update(status=Ticket.Status.PURCHASED)
         return render(request, "booker/purchase_success.html")
 
-    messages.error(request, "You have no tickets in cart or tickets reservation time expired")
+    messages.error(
+        request, "You have no tickets in cart or tickets reservation time expired"
+    )
     return redirect("booker:book-ticket", pk=event_id)

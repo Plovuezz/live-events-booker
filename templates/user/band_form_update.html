@@ -11,14 +11,14 @@
 
       <ul class="nav nav-tabs mb-4">
         <li class="nav-item">
-          <a class="nav-link nav-text-black" href="{% url 'booker:profile' %}">Account</a>
+          <a class="nav-link nav-text-black" href="{% url 'user:profile' %}">Account</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-text-black" href="{% url 'booker:profile-tickets' %}">Tickets</a>
+          <a class="nav-link nav-text-black" href="{% url 'user:profile-tickets' %}">Tickets</a>
         </li>
         {% if user.band %}
           <li class="nav-item">
-          <a class="nav-link nav-text-black active" href="{% url 'booker:profile-band' %}">Band</a>
+          <a class="nav-link nav-text-black active" href="{% url 'user:profile-band' %}">Band</a>
           </li>
         {% endif %}
       </ul>
