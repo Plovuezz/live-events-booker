@@ -26,7 +26,12 @@
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
             <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a></li>
+            <li>
+              <form action="{% url 'user:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item">Logout</button>
+              </form>
+            </li>
           </ul>
         </li>
         {% else %}

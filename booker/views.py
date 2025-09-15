@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -19,7 +20,7 @@ class IndexListView(generic.ListView):
         qs = super().get_queryset()
         return (
             qs.select_related("band", "tour", "location")
-            .filter(is_active=True)
+            .filter(is_active=True, date__gt=timezone.now())
             .order_by("date")[:25]
         )
 
@@ -40,6 +41,14 @@ class IndexListView(generic.ListView):
 class EventListView(generic.ListView):
     model = Event
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return (
+            qs.filter(is_active=True, date__gt=timezone.now())
+            .select_related("band", "tour", "location")
+            .order_by("date")
+        )
+
 
 class EventDetailView(generic.DetailView):
     model = Event
@@ -47,6 +56,10 @@ class EventDetailView(generic.DetailView):
 
 class TourListView(generic.ListView):
     model = Tour
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(is_active=True).order_by("start_time")
 
 
 class TourDetailView(generic.DetailView):
@@ -56,6 +69,21 @@ class TourDetailView(generic.DetailView):
 class BandListView(generic.ListView):
     model = Band
     ordering = ["name"]
+
+
+class BandDetailView(generic.DetailView):
+    model = Band
+
+    def get_queryset(self):
+        return Band.objects.select_related("info")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        band = self.get_object()
+        context["events"] = band.events.filter(is_active=True).select_related(
+            "location"
+        )
+        return context
 
 
 class BookTicketView(LoginRequiredMixin, generic.ListView):

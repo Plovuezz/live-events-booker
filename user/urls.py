@@ -1,10 +1,10 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from user.views import (
-    register_view,
-    logout_view,
-    activate,
-    to_profile,
+    RegisterView,
+    ActivateAccountView,
+    ProfileView,
     TicketListView,
     UserUpdateView,
     UserAddBandView,
@@ -14,17 +14,25 @@ from user.views import (
     TourUpdateView,
     TourDeleteView,
     BandUpdateView,
-    CustomPasswordChangeView
+    CustomPasswordChangeView,
 )
 
 app_name = "user"
 
 
 urlpatterns = [
-    path("register/", register_view, name="register"),
-    path("logout/", logout_view, name="logout"),
-    path("activate/<str:uid>/<str:token>/", activate, name="activate"),
-    path("profile/", to_profile, name="profile"),
+    path("register/", RegisterView.as_view(), name="register"),
+    path(
+        "logout/",
+        LogoutView.as_view(next_page="booker:index"),
+        name="logout",
+    ),
+    path(
+        "activate/<str:uid>/<str:token>/",
+        ActivateAccountView.as_view(),
+        name="activate",
+    ),
+    path("profile/", ProfileView.as_view(), name="profile"),
     path("profile/tickets/", TicketListView.as_view(), name="profile-tickets"),
     path("profile/update/", UserUpdateView.as_view(), name="profile-user-update"),
     path("profile/band/add/", UserAddBandView.as_view(), name="profile-band-add"),

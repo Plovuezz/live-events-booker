@@ -1,7 +1,6 @@
 from base64 import urlsafe_b64encode
 
-from django.contrib.auth import logout, get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
@@ -12,38 +11,36 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode
-from django.views import generic
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views import generic, View
 
 from booker.models import Ticket, Band, Tour, Event
 from booker.services.token_service import account_activation_token
 from user.forms import UserRegistrationForm, UserUpdateForm, UserBandAddForm
 
+
 User = get_user_model()
 
 
-def logout_view(request):
-    logout(request)
-    return redirect("booker:index")
-
-
 def activate_email(request, user, to_email):
+
     mail_subject = "Activate your user account."
 
     scheme = request.scheme
     domain = get_current_site(request).domain
-    uid = urlsafe_b64encode(force_bytes(user.pk)).decode()
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = account_activation_token.make_token(user)
 
-    url = f"{scheme}://{domain}/activate/{uid}/{token}/"
+    url = f"{scheme}://{domain}/users/activate/{uid}/{token}/"
 
     html_content = render_to_string(
         "registration/activate_account.html",
         {"url": url, "user": user},
     )
-    email = EmailMessage(mail_subject, body=html_content, to=[to_email])
 
+    email = EmailMessage(mail_subject, body=html_content, to=[to_email])
     email.content_subtype = "html"
+
     if email.send():
         messages.success(request, f"Activation link was sent to your email")
     else:
@@ -53,8 +50,12 @@ def activate_email(request, user, to_email):
         )
 
 
-def register_view(request):
-    if request.method == "POST":
+class RegisterView(View):
+    def get(self, request):
+        form = UserRegistrationForm()
+        return render(request, "registration/register.html", {"form": form})
+
+    def post(self, request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -62,43 +63,45 @@ def register_view(request):
             user.save()
             activate_email(request, user, form.cleaned_data.get("email"))
             return redirect("login")
-
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
-
-    else:
-        form = UserRegistrationForm()
-
-    return render(
-        request=request,
-        template_name="registration/register.html",
-        context={"form": form},
-    )
+        return render(request, "registration/register.html", {"form": form})
 
 
-def activate(request, uid, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uid))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+class ActivateAccountView(View):
+    def get(self, request, uid: str, token: str):
+        try:
+            uid = force_str(urlsafe_base64_decode(uid))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
 
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
+        if user is not None:
+            if user.is_active:
+                messages.info(request, "Your account is already activated.")
 
-        messages.success(request, "Now you can login your account.")
+                return redirect("login")
+
+            if account_activation_token.check_token(user, token):
+                user.is_active = True
+                user.save()
+
+                messages.success(
+                    request,
+                    "Thank you for confirming your email. You can now login to your account.",
+                )
+                return redirect("login")
+
+        messages.success(
+            request,
+            "Something went wrong, or token expired.",
+        )
         return redirect("login")
-    else:
-        messages.error(request, "Activation link is invalid!")
-
-    return redirect("booker:index")
 
 
-@login_required
-def to_profile(request):
-    return render(request, "user/user_profile.html")
+class ProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "user/user_profile.html"
 
 
 class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -115,7 +118,7 @@ class UserAddBandView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = UserBandAddForm
     template_name = "user/user_profile_update.html"
-    success_url = reverse_lazy("booker:profile")
+    success_url = reverse_lazy("user:profile")
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -223,4 +226,3 @@ class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_queryset(self):
         return Event.objects.filter(band__members=self.request.user)
-

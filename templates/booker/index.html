@@ -10,7 +10,7 @@
       {% if event_list %}
         {% for event in event_list %}
           <div class="event-card"
-               style="background-image: url('{% if event.tour %}{{ event.tour.avatar.url }}{% elif event.photo %}{{ event.photo.url }}{% elif event.band.avatar %}{{ event.band.avatar.url }}{% endif %}');">
+               style="background-image: url('{% if event.tour.avatar %}{{ event.tour.avatar.url }}{% elif event.photo %}{{ event.photo.url }}{% elif event.band.avatar %}{{ event.band.avatar.url }}{% endif %}');">
             <div class="event-info">
               <h3 style="font-weight: bold">{{ event.band.name }}</h3>
               <p>{{ event.location.name }}, {{ event.location.city }}</p>
@@ -63,12 +63,10 @@
     {% if band_list %}
       {% for band in band_list %}
         <div class="band-card">
-          {% if band.avatar %}
-            <img src="{{ band.avatar.url }}" alt="{{ band.name }}" class="band-avatar">
-{#          {% else %}#}
-{#            <img src="{% static 'img/default-band.png' %}" alt="No avatar" class="band-avatar">#}
-          {% endif %}
-          <div class="band-name">{{ band.name }}</div>
+          <div class="band-card">
+            <a href="{% url 'booker:band-detail' band.id %}"><img src="{{ band.avatar.url }}" alt="{{ band.name }}" class="band-avatar"></a>
+            <a href="{% url 'booker:band-detail' band.id %}"><div class="band-name">{{ band.name }}</div></a>
+          </div>
         </div>
       {% endfor %}
     {% else %}

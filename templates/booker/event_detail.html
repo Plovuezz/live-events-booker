@@ -33,6 +33,9 @@
           {{ event.band.bio }}
         {% endif %}
       </p>
+      {% if event.band.info.web_page %}
+        <p><a href="{{ event.band.info.web_page }}">{{ event.band.info.web_page }}</a></p>
+      {% endif %}
       </div>
     </div>
   </div>

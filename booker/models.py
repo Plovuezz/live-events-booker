@@ -1,16 +1,18 @@
 import random
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CASCADE, SET_NULL, Q
+from django.db.models import CASCADE
 from django.utils import timezone
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -22,6 +24,9 @@ class Band(models.Model):
     genres = models.ManyToManyField(Genre, related_name="bands")
     avatar = models.ImageField(upload_to="bands/")
     invite_code = models.CharField(max_length=255, unique=True, null=True, blank=True)
+
+    class Meta:
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -42,6 +47,9 @@ class BandInfo(models.Model):
     web_page = models.URLField(null=True, blank=True)
     band = models.OneToOneField(Band, on_delete=CASCADE, related_name="info")
 
+    class Meta:
+        ordering = ("band",)
+
     def __str__(self):
         return f"{self.band.name} info"
 
@@ -53,6 +61,9 @@ class Location(models.Model):
     city = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     photo = models.ImageField(upload_to="locations/", null=True, blank=True)
+
+    class Meta:
+        ordering = ("name", "city")
 
     def __str__(self):
         return f"{self.name}, {self.city}"
@@ -66,6 +77,9 @@ class Tour(models.Model):
     initiator = models.ForeignKey(Band, related_name="tours", on_delete=CASCADE)
     is_active = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ("title", "initiator")
+
     def __str__(self):
         return self.title
 
@@ -75,6 +89,9 @@ class Zone(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=9)
     capacity = models.PositiveIntegerField()
     location = models.ForeignKey(Location, on_delete=CASCADE, related_name="zones")
+
+    class Meta:
+        ordering = ("location", "name")
 
     def __str__(self):
         return f"{self.location.name}'s {self.name}"
@@ -118,7 +135,9 @@ class Ticket(models.Model):
         PURCHASED = "purchased", "Purchased"
         CANCELLED = "cancelled", "Cancelled"
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="tickets")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="tickets"
+    )
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="tickets")
     zone = models.ForeignKey(Zone, related_name="tickets", on_delete=CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
@@ -127,6 +146,9 @@ class Ticket(models.Model):
         choices=Status.choices,
         default=Status.RESERVED,
     )
+
+    class Meta:
+        ordering = ("-added_at",)
 
     def __str__(self):
         return f"{self.zone} on {self.event} {self.added_at.strftime('%A %d, %Y (%H:%M)')} ({self.status})"

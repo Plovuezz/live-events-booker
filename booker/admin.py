@@ -79,6 +79,8 @@ class AdminEvent(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.select_related("band", "location")
 
+    # I think this will be in case, but I am not sure how I am gonna use it/
+
     # def formfield_for_manytomany(self, db_field, request, **kwargs):
     #     if db_field.name == "zones":
     #         obj_id = request.resolver_match.kwargs.get("object_id")

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import sys
 
 from pathlib import Path
 
@@ -128,6 +129,7 @@ LOGOUT_REDIRECT_URL = "/"
 MEDIA_ROOT = BASE_DIR / "media/"
 MEDIA_URL = "media/"
 
+# DropboxStorage / WindowsCompatibleDropboxStorage
 STORAGES = {
     "default": {
         "BACKEND": "base.storage.WindowsCompatibleDropboxStorage",
@@ -143,6 +145,10 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
+if "test" in sys.argv:
+    STORAGES["default"] = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    }
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -162,3 +168,10 @@ PASSWORD_RESET_TIMEOUT = 14400
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
