@@ -21,6 +21,6 @@ Event Booker is a Django-based web app for browsing concerts, booking tickets, a
 https://live-events-booker.onrender.com
 
 
-**### TEST USER
+TEST USER
 login niviw37629
-password test12345**
+password test12345
