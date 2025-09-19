@@ -108,7 +108,7 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "user/user_profile_update.html"
-    success_url = reverse_lazy("booker:profile")
+    success_url = reverse_lazy("user:profile")
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -177,7 +177,7 @@ class BandUpdateView(LoginRequiredMixin, generic.UpdateView):
         "avatar",
     ]
     template_name = "user/band_form_update.html"
-    success_url = reverse_lazy("user:profile-band")
+    success_url = reverse_lazy("user:profile")
 
     def get_queryset(self):
         return Band.objects.filter(members=self.request.user)
