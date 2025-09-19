@@ -23,12 +23,12 @@ class WindowsCompatibleDropboxStorage(DropboxStorage):
 
         return link
 
-    def _full_path(self, name):
-        if name == "/":
-            name = ""
-
-        # If the machine is windows do not append the drive letter to file path
-        if os.name == "nt":
-            return os.path.join("/", self.root_path, name).replace("\\", "/")
-        else:
-            return safe_join(self.root_path, name).replace("\\", "/")
+    # def _full_path(self, name):
+    #     if name == "/":
+    #         name = ""
+    #
+    #     # If the machine is windows do not append the drive letter to file path
+    #     if os.name == "nt":
+    #         return os.path.join("/", self.root_path, name).replace("\\", "/")
+    #     else:
+    #         return safe_join(self.root_path, name).replace("\\", "/")
