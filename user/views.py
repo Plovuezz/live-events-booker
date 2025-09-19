@@ -131,7 +131,7 @@ class UserAddBandView(LoginRequiredMixin, generic.UpdateView):
 class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangeForm
     template_name = "user/user_profile_update.html"
-    success_url = reverse_lazy("booker:profile")
+    success_url = reverse_lazy("user:profile")
 
 
 class TicketListView(LoginRequiredMixin, generic.ListView):
@@ -187,7 +187,7 @@ class TourUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tour
     fields = ["description", "avatar", "title", "start_time", "is_active"]
     template_name = "user/band_form_update.html"
-    success_url = reverse_lazy("booker:profile-band")
+    success_url = reverse_lazy("user:profile-band")
 
     def get_queryset(self):
         return Tour.objects.filter(initiator__members=self.request.user)
@@ -195,7 +195,7 @@ class TourUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class TourDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tour
-    success_url = reverse_lazy("booker:profile-band")
+    success_url = reverse_lazy("user:profile-band")
 
     def get_queryset(self):
         return Tour.objects.filter(initiator__members=self.request.user)
@@ -214,7 +214,7 @@ class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
         "date",
     ]
     template_name = "user/band_form_update.html"
-    success_url = reverse_lazy("booker:profile-band")
+    success_url = reverse_lazy("user:profile-band")
 
     def get_queryset(self):
         return Event.objects.filter(band__members=self.request.user)
@@ -222,7 +222,7 @@ class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Event
-    success_url = reverse_lazy("booker:profile-band")
+    success_url = reverse_lazy("user:profile-band")
 
     def get_queryset(self):
         return Event.objects.filter(band__members=self.request.user)
