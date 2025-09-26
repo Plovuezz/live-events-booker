@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="text-center my-4">
+    <h2 class="h2 fw-bold"> All Upcoming Events</h2>
+    <hr class="mx-auto" style="width: 110px; border-top: 3px solid">
+  </div>
+  <div class="events-container">
+    {% if event_list %}
+      {% for event in event_list %}
+        <div class="event-card"
+             style="background-image: url('{% if event.tour.avatar %}{{ event.tour.avatar.url }}{% elif event.photo %}{{ event.photo.url }}{% elif event.band.avatar %}{{ event.band.avatar.url }}{% endif %}');">
+          <div class="event-info">
+            <h3 style="font-weight: bold">{{ event.band.name }}</h3>
+            <p>{{ event.location.name }}, {{ event.location.city }}</p>
+            <p><span style="font-size: larger; font-weight: bold">{{ event.date|date:"d.m" }}</span> {{ event.date|date:"G:i" }}</p>
+            <a href="{% url 'booker:event-detail' event.pk %}" class="btn-details">More details</a>
+            <a href="{% url 'booker:book-ticket' event.id %}" class="btn-ticket">Get a Ticket</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No events for now...</p>
+    {% endif %}
+  </div>
+
+{% endblock %}

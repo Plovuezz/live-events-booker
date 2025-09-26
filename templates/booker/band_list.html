@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="text-center my-4">
+    <h2 class="h2 fw-bold"> All Artists</h2>
+    <hr class="mx-auto" style="width: 110px; border-top: 3px solid">
+  </div>
+
+  <div class="band-container">
+    {% if band_list %}
+      {% for band in band_list %}
+        <div class="band-card">
+          <a href="{% url 'booker:band-detail' band.id %}"><img src="{{ band.avatar.url }}" alt="{{ band.name }}" class="band-avatar"></a>
+          <a href="{% url 'booker:band-detail' band.id %}"><div class="band-name">{{ band.name }}</div></a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No bands for now...</p>
+    {% endif %}
+  </div>
+
+
+{% endblock %}

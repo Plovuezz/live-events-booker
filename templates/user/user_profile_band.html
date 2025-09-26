@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="d-flex min-vh-100 bg-light">
+
+  {% include "includes/profile_sidebar.html" %}
+
+  <div class="flex-grow-1 p-4">
+
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a class="nav-link nav-text-black" href="{% url 'user:profile' %}">Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-text-black" href="{% url 'user:profile-tickets' %}">Tickets</a>
+      </li>
+      <li class="nav-item">
+        <p class="nav-link nav-text-black active">Band</p>
+      </li>
+    </ul>
+
+    <div class="bg-white p-4 rounded shadow-sm text-center">
+
+      <h3 class="mb-4" style="color: black; font-weight: bold">{{ band.name }}</h3>
+
+      <!-- Band Info -->
+      <div class="mb-5">
+        <h5 class="mb-3" style="color: black; font-weight: bold">Band Info</h5>
+        <div class="card shadow-sm border-0 mb-3">
+          <div class="card-body row align-items-center">
+
+
+            <div class="col-md-3 text-start fw-bold">
+              <p class="mb-2">Bio</p>
+              <p class="mb-2">Genres</p>
+              <p class="mb-2">Band Photo</p>
+            </div>
+
+
+            <div class="col-md-9 text-end">
+              <p class="mb-2 fst-italic">{{ band.bio }}</p>
+              <p class="mb-2">
+                {% for genre in band.genres.all %}
+                  <span class="badge bg-info text-dark me-1">{{ genre }}</span>
+                {% endfor %}
+              </p>
+              <img src="{{ band.avatar.url }}" alt="Band photo" class="img-fluid rounded shadow-sm" style="max-width:150px;">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <span class="fw-bold">Edit band info</span>
+            <a class="btn btn-index" href="{% url 'user:profile-band-update' band.pk %}">Edit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tours -->
+      <div class="mb-5">
+        <h5 class="mb-3 fw-semibold" style="color: black; font-weight: bold">Tours</h5>
+        {% if tour_list %}
+          {% for tour in tour_list %}
+            <div class="card shadow-sm border-0 mb-3">
+              <div class="card-body row align-items-center">
+
+                <div class="col-md-9 text-start">
+                  <h6 class="mb-1" style="color: black; font-weight: bold">{{ tour.title }}</h6>
+                  <small class="text-muted">
+                    Active:
+                    {% if tour.is_active %}
+                      <i class="bi bi-check-circle-fill text-success"></i>
+                    {% else %}
+                      <i class="bi bi-x-circle-fill text-danger"></i>
+                    {% endif %}
+                  </small><br>
+                  <small class="text-muted">Start: {{ tour.start_time|date:"d M Y H:i" }}</small>
+                </div>
+
+                <div class="col-md-3 text-end">
+                  <a class="btn btn-index" href="{% url 'user:band-tour-update' tour.pk %}">Edit</a>
+                  <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ tour.id }}">
+                  Delete
+                  </button>
+
+                <div class="modal fade" id="deleteModal{{ tour.id }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Confirm delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+                        <form method="post" action="{% url 'user:band-tour-delete' tour.pk %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-ticket">Yes, delete</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No tours</p>
+        {% endif %}
+      </div>
+
+      <!-- Events -->
+      <div class="mb-5">
+        <h5 class="mb-3 fw-semibold" style="color: black; font-weight: bold">Events</h5>
+        {% if event_list %}
+          {% for event in event_list %}
+            <div class="card shadow-sm border-0 mb-3">
+              <div class="card-body row align-items-center">
+
+                <div class="col-md-9 text-start">
+                  <h6 class="mb-1" style="color: black; font-weight: bold">{% if event.name %}{{ event.name }}{% else %}{{ event.location.name }}'s event{% endif %}</h6>
+                  <small class="text-muted">
+                    Active:
+                    {% if event.is_active %}
+                      <i class="bi bi-check-circle-fill text-success"></i>
+                    {% else %}
+                      <i class="bi bi-x-circle-fill text-danger"></i>
+                    {% endif %}
+                  </small><br>
+                  <small class="text-muted">Date: {{ event.date|date:"d M Y H:i" }}</small><br>
+                  <small class="text-muted">{{ event.tour }}</small><br>
+                  <small class="text-muted">{{ event.location.name }}, {{ event.location.city }}</small>
+                </div>
+
+                <div class="col-md-3 text-end">
+                  <a class="btn btn-index" href="{% url 'user:band-event-update' event.pk %}">Edit</a>
+
+
+                <button type="button" class="btn btn-ticket" data-bs-toggle="modal" data-bs-target="#deleteModal{{ event.id }}">
+                  Delete
+                </button>
+
+                <div class="modal fade" id="deleteModal{{ event.id }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Confirm delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+                        <form method="post" action="{% url 'user:band-event-delete' event.pk %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-ticket">Yes, delete</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No events</p>
+        {% endif %}
+      </div>
+
+      <div class="mt-4">
+        <img src="{% static 'tickets.png' %}" alt="Tickets" class="img-fluid" style="max-width:200px;">
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

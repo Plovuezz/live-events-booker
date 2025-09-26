@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <style>
+  body {
+    margin-top: 0 !important;
+  }
+  </style>
+  <div style="min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); margin: 0;">
+    <div style="max-width: 500px; width: 100%; padding: 2rem; background-color: #222; color: #fff; border-radius: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.5); text-align: center;">
+      <div style="margin-bottom: 1rem;">
+        <i class="bi bi-check-circle-fill" style="font-size: 3.5rem; color: #28a745;"></i>
+      </div>
+      <h3 style="margin-bottom: 1rem;">Thank you for your purchase!</h3>
+      <p style="color: #ccc; margin-bottom: 1.5rem; line-height: 1.5;">
+        Your order is ready.<br>
+        Tickets were sent to your email.
+      </p>
+
+      <a href="{% url 'booker:index' %}" class="btn btn-ticket w-100 mb-2">
+        Go to poster
+      </a>
+      <a href="{% url 'user:profile-tickets' %}" class="btn btn-details w-100">
+        See my tickets
+      </a>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% load static %}
+
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <!-- LEFT SIDE (event info + zones) -->
+      <div class="col-md-9">
+        <!-- Event Header -->
+        <div class="d-flex align-items-center border-bottom pb-2 mb-3">
+          <img src="{% static 'logo.png' %}" alt="Logo" style="height: 40px;" class="me-2">
+          <div>
+            <h4 class="mb-0">{{ event.band.name }}</h4>
+            <small class="text-muted">
+              {{ event.date|date:"j E Y, H:i" }} • {{ event.location }}
+            </small>
+          </div>
+        </div>
+
+      <br>
+      {% if messages %}
+        <div class="mt-3">
+          {% for message in messages %}
+            <div
+              class="alert
+              {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}"
+              role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <br>
+
+    <!-- Zones list -->
+    {% if zones %}
+      {% for zone, left in zones %}
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">{{ zone.name }}</h5>
+            <div>
+              <span class="fw-bold">{{ zone.price }} ₴</span>
+              {% if left > 0 %}
+                <a href="{% url 'booker:create-ticket' event_id=event.id zone_id=zone.id %}" class="btn btn-ticket ms-3">
+                  Add
+                </a>
+              {% else %}
+                <p class="btn btn-index ms-3">
+                  No tickets left
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+        <p class="text-muted">No available zones</p>
+    {% endif %}
+
+  </div>
+
+      <!-- RIGHT SIDE (cart include) -->
+      <div class="col-md-3">
+        {% include "includes/cart.html" %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
